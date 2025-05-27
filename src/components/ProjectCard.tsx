@@ -1,28 +1,33 @@
-import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
-import TechBadge from './TechBadge'
+import Link from "next/link";
+import TechBadge from "./TechBadge";
 
 interface ProjectCardProps {
-  title: string
-  description: string
-  href: string
-  technologies: string[]
-  icon?: string
+  title: string;
+  description: string;
+  href: string;
+  technologies: string[];
+  icon?: string;
 }
 
-export default function ProjectCard({ title, description, href, technologies, icon }: ProjectCardProps) {
+export default function ProjectCard({
+  title,
+  description,
+  href,
+  technologies,
+  icon,
+}: ProjectCardProps) {
   return (
     <Link href={href} className="block">
-      <Card className="hover:shadow-lg transition-shadow duration-200 cursor-pointer h-full">
-        <CardContent className="p-6">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow hover:shadow-lg transition-shadow duration-200 cursor-pointer h-full">
+        <div className="p-6">
           <div className="flex items-start gap-3 mb-4">
-            {icon && (
-              <div className="text-2xl shrink-0">{icon}</div>
-            )}
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+            {icon && <div className="text-2xl shrink-0">{icon}</div>}
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {title}
+            </h3>
           </div>
 
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
             {description}
           </p>
 
@@ -31,8 +36,8 @@ export default function ProjectCard({ title, description, href, technologies, ic
               <TechBadge key={index}>{tech}</TechBadge>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
-  )
+  );
 }

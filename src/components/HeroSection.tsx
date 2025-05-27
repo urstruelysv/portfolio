@@ -1,58 +1,238 @@
-import Image from 'next/image'
-import Link from 'next/link'
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import SAI from "@/public/SAI.jpg";
+
+const Hyperlink = ({ text, link }: { text: string; link: string }) => (
+  <a
+    href={link}
+    className="text-blue-600 dark:text-blue-400 hover:underline"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {text}
+  </a>
+);
 
 export default function HeroSection() {
-  return (
-    <section id="skip" className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex items-start gap-4 mb-8">
-        <div className="flex-1">
-          <h1 className="text-4xl font-bold mb-2">Manu Arora</h1>
-          <p className="text-lg text-gray-600 mb-4">
-            Building{' '}
-            <Link href="https://aceternity.com" className="text-blue-600 hover:underline">
-              Aceternity
-            </Link>
-            ,{' '}
-            <Link href="https://userogue.com" className="text-blue-600 hover:underline">
-              Rogue
-            </Link>
-            {' '}other cool things
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            Senior Software Engineer building SaaS products and web apps.
-            Find me on{' '}
-            <Link href="https://twitter.com/mannupaaji" className="text-blue-600 hover:underline">
-              twitter
-            </Link>
-            {' '}for tech updates and memes.
-          </p>
-        </div>
-        <div className="shrink-0">
-          <Image
-            src="https://ext.same-assets.com/1481338541/849522504.png"
-            alt="Manu Arora profile picture"
-            width={80}
-            height={80}
-            className="rounded-full"
-          />
-        </div>
-      </div>
+  const [open, setOpen] = useState(false);
 
-      {/* Social Link */}
-      <div className="mb-12">
-        <Link
-          href="https://twitter.com/mannupaaji"
-          className="inline-block hover:opacity-75 transition-opacity"
-        >
-          <svg
-            className="w-5 h-5 text-gray-600"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+  const variants = {
+    hidden: { opacity: 0, y: "1vh" },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delayChildren: 0.1,
+        staggerChildren: 0.1,
+      },
+    },
+    exit: { opacity: 0, y: "1vh" },
+  };
+
+  const itemA = {
+    hidden: { opacity: 0, scale: 0.95, y: "1vh" },
+    show: { opacity: 1, scale: 1, y: 0 },
+  };
+
+  return (
+    <section id="skip" className="max-w-4xl mx-auto px-6 py-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:space-x-10 w-full mb-10">
+        <div className="flex md:w-3/4 flex-col mt-6">
+          <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-2 text-black dark:text-white">
+            Sai Vamshi Gannoju
+          </h1>
+
+          <div className="relative leading-7 items-center flex-wrap text-zinc-800 dark:text-zinc-500 mb-5 text-base md:text-lg">
+            Building
+            <a
+              className="inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1 text-sm md:text-base rounded"
+              href="https://www.aethoscompany.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Aethos Labs
+            </a>
+            <a href="">,</a>
+            <a
+              className="inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1 text-sm md:text-base rounded"
+              href="https://cirrowtr.in"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Cirro
+            </a>
+            other
+            <span
+              className="font-bold cursor-pointer text-zinc-800 dark:text-zinc-200 text-sm md:text-base"
+              onMouseEnter={() => setOpen(true)}
+              onMouseLeave={() => setOpen(false)}
+            >
+              {" "}
+              cool things
+              <AnimatePresence>
+                {open && (
+                  <motion.div
+                    key="modal"
+                    variants={variants}
+                    initial="hidden"
+                    animate="show"
+                    exit="exit"
+                    className="z-20 p-4 rounded-xl bg-white dark:bg-zinc-800 shadow-2xl absolute inset-x-0 w-full min-h-60 text-xs md:text-sm"
+                  >
+                    <div className="bg-grid-slate-50 dark:bg-grid-zinc-700/30 absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]"></div>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Founder{" "}
+                      <a
+                        href="https://placeholdertech.in"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @placeholdertech
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Mentoring{" "}
+                      <a
+                        href="https://codementor.io/@manuarora"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @codementor
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        href="https://mentorcruise.com/mentor/manuarora/"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @mentorcruise
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Helping front-end developers{" "}
+                      <a
+                        href="https://algochurn.com"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @algochurn
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        href="https://app.pixelperfect.quest"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @pixelperfect
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Web templates and components{" "}
+                      <a
+                        href="https://tailwindmasterkit.com"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @tailwindmasterkit
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Cool TailwindCSS Box Shadows{" "}
+                      <a
+                        href="https://www.manuarora.in/boxshadows"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @boxshadows
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Blogs{" "}
+                      <a
+                        href="https://www.freecodecamp.org/news/author/manu/"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @freecodecamp
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
+                      Tech videos and snippets{" "}
+                      <a
+                        href="https://www.youtube.com/@manuarora"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @youtube
+                      </a>
+                    </motion.p>
+                    <div className="absolute inset-x-0 -bottom-px h-px bg-slate-900/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]">
+                      <div className="w-full flex-none blur-[1px] h-px [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </span>
+          </div>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-medium">
+            Full-stack developer crafting tasteful frontends, robust backends,
+            and smooth DevOps—growing into system architecture for resilient
+            end-to-end solutions.
+          </p>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-medium mt-2">
+            Here is my{" "}
+            <a
+              href="/cv"
+              className="font-bold font-inter relative inline-flex overflow-hidden text-xs md:text-sm text-zinc-600/0.1 dark:text-zinc-600/0.1 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="relative">CV</span>
+            </a>
+            .
+          </p>
+        </div>
+        <div className="relative flex-shrink-1 p-4 md:p-4 md:order-last order-first">
+          <a
+            href="https://twitter.com/mannupaaji"
+            target="_blank"
+            className="block z-[5] overflow-hidden rounded shadow-xl ring-1 ring-slate-900/5 relative bg-white h-20 w-20"
+            rel="noopener noreferrer"
           >
-            <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
-          </svg>
-        </Link>
+            {/* Replace with <BlurImage ... /> if avatar-new.png is available */}
+            <img
+              src={SAI.src}
+              alt="Sai Vamshi Gannoju"
+              className="bg-gray-100 object-contain w-full h-full rounded"
+            />
+          </a>
+          {/* Subtle grid/lines background */}
+          <div className="z-0">
+            <div className="absolute left-0 -right-12 top-0 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
+            <div className="absolute -top-8 bottom-0 left-12 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
+            <div className="absolute left-0 -right-12 bottom-14 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
+            <div className="absolute right-0 -top-2 -bottom-8 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
+            <div className="absolute bottom-full right-10 -mb-px flex h-8 items-end overflow-hidden">
+              <div className="flex -mb-px h-[2px] w-40 -scale-x-100">
+                <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-  )
+  );
 }
