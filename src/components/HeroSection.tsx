@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import SAI from "@/public/SAI.jpg";
+import { BlurImage } from "./BlurImage";
+import Sv from "../../public/Sv.png";
 
 const Hyperlink = ({ text, link }: { text: string; link: string }) => (
   <a
@@ -195,7 +196,7 @@ export default function HeroSection() {
             Here is my{" "}
             <a
               href="/cv"
-              className="font-bold font-inter relative inline-flex overflow-hidden text-xs md:text-sm text-zinc-600/0.1 dark:text-zinc-600/0.1 hover:underline"
+              className="font-bold font-inter relative inline-flex overflow-hidden text-xs md:text-sm text-zinc-600/0.1 dark:text-zinc-600 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -211,25 +212,19 @@ export default function HeroSection() {
             className="block z-[5] overflow-hidden rounded shadow-xl ring-1 ring-slate-900/5 relative bg-white h-20 w-20"
             rel="noopener noreferrer"
           >
-            {/* Replace with <BlurImage ... /> if avatar-new.png is available */}
-            <img
-              src={SAI.src}
+            <BlurImage
+              src="/Sv.png"
               alt="Sai Vamshi Gannoju"
               className="bg-gray-100 object-contain w-full h-full rounded"
+              objectFit="cover"
             />
           </a>
-          {/* Subtle grid/lines background */}
+          {/* Grid decorations remain unchanged */}
           <div className="z-0">
             <div className="absolute left-0 -right-12 top-0 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
             <div className="absolute -top-8 bottom-0 left-12 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
             <div className="absolute left-0 -right-12 bottom-14 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
             <div className="absolute right-0 -top-2 -bottom-8 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
-            <div className="absolute bottom-full right-10 -mb-px flex h-8 items-end overflow-hidden">
-              <div className="flex -mb-px h-[2px] w-40 -scale-x-100">
-                <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-                <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
