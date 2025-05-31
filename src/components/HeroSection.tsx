@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+
 import { BlurImage } from "./BlurImage";
-import Sv from "../../public/Sv.png";
 
 const Hyperlink = ({ text, link }: { text: string; link: string }) => (
   <a

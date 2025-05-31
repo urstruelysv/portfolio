@@ -1,0 +1,94 @@
+---
+title: "useDebounce Hook"
+description: "A custom React hook for debouncing values and functions"
+logo: "react.png"
+date: "2024-03-20"
+---
+
+# useDebounce Hook
+
+A custom React hook that helps you debounce values and functions. This is particularly useful for search inputs, API calls, or any operation that needs to be delayed until the user stops typing or performing an action.
+
+## Usage
+
+```typescript
+import { useState, useEffect } from "react";
+
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+```
+
+## Example
+
+```typescript
+function SearchComponent() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    // This will only run after the user stops typing for 500ms
+    if (debouncedSearchTerm) {
+      // Perform search
+      searchAPI(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm]);
+
+  return (
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+## Function Version
+
+If you need to debounce a function instead of a value, here's an alternative implementation:
+
+```typescript
+import { useCallback, useRef } from "react";
+
+function useDebounceCallback<T extends (...args: any[]) => any>(
+  callback: T,
+  delay: number
+): (...args: Parameters<T>) => void {
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  return useCallback(
+    (...args: Parameters<T>) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    },
+    [callback, delay]
+  );
+}
+```
+
+This hook is perfect for:
+
+- Search inputs
+- Window resize handlers
+- Scroll event handlers
+- API calls that should be throttled
+- Any operation that needs to wait for user input to settle

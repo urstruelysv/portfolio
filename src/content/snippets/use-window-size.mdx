@@ -1,0 +1,147 @@
+---
+title: "useWindowSize Hook"
+description: "A custom React hook for tracking window dimensions"
+logo: "react.png"
+date: "2024-03-20"
+---
+
+# useWindowSize Hook
+
+A custom React hook that helps you track window dimensions. This is useful for responsive designs and layouts that need to adapt to different screen sizes.
+
+## Usage
+
+```typescript
+import { useState, useEffect } from "react";
+
+interface WindowSize {
+  width: number;
+  height: number;
+}
+
+function useWindowSize(): WindowSize {
+  const [windowSize, setWindowSize] = useState<WindowSize>({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call once to set initial size
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowSize;
+}
+```
+
+## Example
+
+```typescript
+function ResponsiveComponent() {
+  const { width, height } = useWindowSize();
+
+  return (
+    <div>
+      <h1>Window Size</h1>
+      <p>Width: {width}px</p>
+      <p>Height: {height}px</p>
+
+      {width < 768 ? (
+        <div>Mobile Layout</div>
+      ) : width < 1024 ? (
+        <div>Tablet Layout</div>
+      ) : (
+        <div>Desktop Layout</div>
+      )}
+    </div>
+  );
+}
+```
+
+## Advanced Usage with Breakpoints
+
+Here's an enhanced version that includes breakpoint detection:
+
+```typescript
+import { useState, useEffect } from "react";
+
+interface Breakpoints {
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+}
+
+const breakpoints: Breakpoints = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+};
+
+interface WindowSize {
+  width: number;
+  height: number;
+  isMobile: boolean;
+  isTablet: boolean;
+  isDesktop: boolean;
+  isLargeDesktop: boolean;
+}
+
+function useWindowSize(): WindowSize {
+  const [windowSize, setWindowSize] = useState<WindowSize>({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+    isMobile: false,
+    isTablet: false,
+    isDesktop: false,
+    isLargeDesktop: false,
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    function handleResize() {
+      const width = window.innerWidth;
+      setWindowSize({
+        width,
+        height: window.innerHeight,
+        isMobile: width < breakpoints.md,
+        isTablet: width >= breakpoints.md && width < breakpoints.lg,
+        isDesktop: width >= breakpoints.lg && width < breakpoints.xl,
+        isLargeDesktop: width >= breakpoints.xl,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call once to set initial size
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowSize;
+}
+```
+
+This hook is perfect for:
+
+- Responsive layouts
+- Conditional rendering based on screen size
+- Mobile-first designs
+- Dynamic UI adjustments
+- Media query alternatives

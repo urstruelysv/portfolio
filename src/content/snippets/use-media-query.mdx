@@ -1,0 +1,179 @@
+---
+title: "useMediaQuery Hook"
+description: "A custom React hook for responsive design with media queries"
+logo: "react.png"
+date: "2024-03-20"
+---
+
+# useMediaQuery Hook
+
+A custom React hook that helps you create responsive designs using media queries. This hook provides a simple way to react to media query changes in your React components.
+
+## Basic Usage
+
+```typescript
+import { useState, useEffect } from "react";
+
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const media = window.matchMedia(query);
+
+    // Set initial value
+    setMatches(media.matches);
+
+    // Create event listener
+    const listener = (event: MediaQueryListEvent) => {
+      setMatches(event.matches);
+    };
+
+    // Add listener
+    media.addEventListener("change", listener);
+
+    // Clean up
+    return () => media.removeEventListener("change", listener);
+  }, [query]);
+
+  return matches;
+}
+```
+
+## Example
+
+```typescript
+function ResponsiveComponent() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
+  const isDesktop = useMediaQuery("(min-width: 1025px)");
+
+  return (
+    <div>
+      {isMobile && <div>Mobile View</div>}
+      {isTablet && <div>Tablet View</div>}
+      {isDesktop && <div>Desktop View</div>}
+    </div>
+  );
+}
+```
+
+## Advanced Usage with Common Breakpoints
+
+Here's an enhanced version that includes common breakpoints and orientation support:
+
+```typescript
+import { useState, useEffect } from "react";
+
+interface MediaQueries {
+  isMobile: boolean;
+  isTablet: boolean;
+  isDesktop: boolean;
+  isLargeDesktop: boolean;
+  isPortrait: boolean;
+  isLandscape: boolean;
+  isDarkMode: boolean;
+  isReducedMotion: boolean;
+}
+
+function useMediaQuery(): MediaQueries {
+  const [matches, setMatches] = useState<MediaQueries>({
+    isMobile: false,
+    isTablet: false,
+    isDesktop: false,
+    isLargeDesktop: false,
+    isPortrait: false,
+    isLandscape: false,
+    isDarkMode: false,
+    isReducedMotion: false,
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const queries = {
+      isMobile: "(max-width: 767px)",
+      isTablet: "(min-width: 768px) and (max-width: 1023px)",
+      isDesktop: "(min-width: 1024px) and (max-width: 1279px)",
+      isLargeDesktop: "(min-width: 1280px)",
+      isPortrait: "(orientation: portrait)",
+      isLandscape: "(orientation: landscape)",
+      isDarkMode: "(prefers-color-scheme: dark)",
+      isReducedMotion: "(prefers-reduced-motion: reduce)",
+    };
+
+    const mediaQueries = Object.entries(queries).map(([key, query]) => ({
+      key,
+      media: window.matchMedia(query),
+    }));
+
+    const updateMatches = () => {
+      setMatches(
+        mediaQueries.reduce((acc, { key, media }) => {
+          acc[key as keyof MediaQueries] = media.matches;
+          return acc;
+        }, {} as MediaQueries)
+      );
+    };
+
+    // Set initial values
+    updateMatches();
+
+    // Add listeners
+    mediaQueries.forEach(({ media }) => {
+      media.addEventListener("change", updateMatches);
+    });
+
+    // Clean up
+    return () => {
+      mediaQueries.forEach(({ media }) => {
+        media.removeEventListener("change", updateMatches);
+      });
+    };
+  }, []);
+
+  return matches;
+}
+```
+
+## Usage with Tailwind CSS
+
+Here's how to use it with Tailwind CSS breakpoints:
+
+```typescript
+function TailwindResponsiveComponent() {
+  const isSm = useMediaQuery("(min-width: 640px)");
+  const isMd = useMediaQuery("(min-width: 768px)");
+  const isLg = useMediaQuery("(min-width: 1024px)");
+  const isXl = useMediaQuery("(min-width: 1280px)");
+  const is2Xl = useMediaQuery("(min-width: 1536px)");
+
+  return (
+    <div
+      className={`
+      ${isSm ? "sm:block" : "hidden"}
+      ${isMd ? "md:flex" : "flex-col"}
+      ${isLg ? "lg:grid" : ""}
+      ${isXl ? "xl:container" : ""}
+      ${is2Xl ? "2xl:mx-auto" : ""}
+    `}
+    >
+      {/* Your content */}
+    </div>
+  );
+}
+```
+
+This hook is perfect for:
+
+- Responsive layouts
+- Dark mode detection
+- Reduced motion preferences
+- Device orientation changes
+- Tailwind CSS breakpoint matching
+- Any media query-based responsive design

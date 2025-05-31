@@ -1,0 +1,108 @@
+---
+title: "useClickOutside Hook"
+description: "A custom React hook for detecting clicks outside of a component"
+logo: "react.png"
+date: "2024-03-20"
+---
+
+# useClickOutside Hook
+
+A custom React hook that helps you detect clicks outside of a component. This is particularly useful for dropdowns, modals, and other UI elements that need to be closed when clicking outside.
+
+## Usage
+
+```typescript
+import { useEffect, RefObject } from "react";
+
+function useClickOutside<T extends HTMLElement>(
+  ref: RefObject<T>,
+  handler: (event: MouseEvent | TouchEvent) => void
+) {
+  useEffect(() => {
+    const listener = (event: MouseEvent | TouchEvent) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
+        return;
+      }
+      handler(event);
+    };
+
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+}
+```
+
+## Example
+
+```typescript
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(dropdownRef, () => {
+    setIsOpen(false);
+  });
+
+  return (
+    <div ref={dropdownRef} className="relative">
+      <button onClick={() => setIsOpen(!isOpen)}>Toggle Dropdown</button>
+
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+          <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Advanced Usage with Multiple Elements
+
+Here's an enhanced version that can handle multiple elements:
+
+```typescript
+import { useEffect, RefObject } from "react";
+
+function useClickOutside<T extends HTMLElement>(
+  refs: RefObject<T>[],
+  handler: (event: MouseEvent | TouchEvent) => void
+) {
+  useEffect(() => {
+    const listener = (event: MouseEvent | TouchEvent) => {
+      const clickedOutside = refs.every(
+        (ref) => !ref.current || !ref.current.contains(event.target as Node)
+      );
+
+      if (clickedOutside) {
+        handler(event);
+      }
+    };
+
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [refs, handler]);
+}
+```
+
+This hook is perfect for:
+
+- Dropdown menus
+- Modal dialogs
+- Popover components
+- Context menus
+- Any UI element that needs to close when clicking outside
