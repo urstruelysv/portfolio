@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import UpcomingProjects from "@/components/UpcomingProjects";
-
+import RecentBlogs from "@/components/ui/RecentBlogsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -14,7 +14,7 @@ export default function Home() {
         <HeroSection />
         <ProjectsSection />
         <UpcomingProjects />
-
+        <RecentBlogs />
         <ContactSection />
       </main>
       <Footer />

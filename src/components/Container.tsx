@@ -11,5 +11,15 @@ export default function Container({
   title,
   description,
 }: ContainerProps) {
-  return <div className="w-full">{children}</div>;
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Head>
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {children}
+      </div>
+    </>
+  );
 }
