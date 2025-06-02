@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
@@ -14,13 +15,17 @@ const navLinks = [
 
 export default function Navigation() {
   const pathname = usePathname();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   return (
     <>
       <nav className="sticky top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 max-w-4xl mx-auto">
         {/* Background + Blur */}
         <div className="absolute inset-0 backdrop-blur-md bg-white/60 dark:bg-gray-900/40 dark:border-gray-900/40 rounded-xl pointer-events-none z-[-1]" />
-
         {/* Blurry Edges */}
         <div className="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-white/60 dark:from-gray-900/40 to-transparent blur-md z-[-1]" />
         <div className="absolute left-0 right-0 bottom-0 h-4 bg-gradient-to-t from-white/60 dark:from-gray-900/40 to-transparent blur-md z-[-1]" />
@@ -30,7 +35,9 @@ export default function Navigation() {
         <div className="relative">
           <div className="flex items-center space-x-1 bg-gray-50/80 dark:bg-black rounded-full px-2 py-1.5 border border-gray-200/50 dark:border-gray-700/50">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              // Only determine active state after hydration to prevent mismatch
+              const isActive = isHydrated && pathname === link.href;
+
               return (
                 <div key={link.href} className="relative">
                   <Link
@@ -44,7 +51,6 @@ export default function Navigation() {
                   >
                     {link.label}
                   </Link>
-
                   {isActive && (
                     <motion.div
                       layoutId="nav-indicator"
@@ -65,7 +71,6 @@ export default function Navigation() {
           </div>
         </div>
       </nav>
-
       {/* Spacer to push content below fixed navbar */}
       <div className="h-6" />
     </>

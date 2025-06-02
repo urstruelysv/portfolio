@@ -35,7 +35,7 @@ export function BlurImage({
           }
           ${objectFit === "cover" ? "object-cover" : "object-contain"}
         `}
-        onLoadingComplete={() => setIsLoading(false)}
+        onLoad={() => setIsLoading(false)}
       />
     </div>
   );

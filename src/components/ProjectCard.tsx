@@ -93,7 +93,7 @@ export default function ProjectCard({
           <div
             className="absolute inset-0 pointer-events-none transition-opacity duration-500 hidden dark:block"
             style={{
-              background: `radial-gradient(800px 600px ellipse at ${mousePosition.x}px ${mousePosition.y}px, rgba(5, 150, 105, 0.15), rgba(145, 185, 16, 0.1), rgba(52, 211, 153, 0.05), transparent 70%)`,
+              background: `radial-gradient(800px 600px ellipse at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 230, 0, 0.26), rgba(214, 218, 8, 0.1), rgba(217, 248, 9, 0.05), transparent 60%)`,
               filter: "blur(1px)",
             }}
           />
