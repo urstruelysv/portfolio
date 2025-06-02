@@ -2,18 +2,21 @@ import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Container from "../../components/Container";
 import ResourcesCard from "../../components/ResourcesCard";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Resources – Sai Vamshi Gannoju",
+  description:
+    "Helpful websites that I've been using for years that have helped me in developing applications and much more",
+};
 
 export default function ResourcesPage() {
   return (
     <>
       <Navigation />
-      <Container
-        title="Resources – Manu Arora"
-        description="Helpful websites that I've been using for years that have helped me in developing
-        applications and much more"
-      >
-        <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
-          <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
+      <Container>
+        <div className="flex flex-col justify-center items-start max-w-3xl mx-auto mb-16">
+          <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 mt-4 text-black dark:text-white">
             Resources
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mb-4">

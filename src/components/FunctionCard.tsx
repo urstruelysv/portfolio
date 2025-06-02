@@ -30,7 +30,7 @@ export default function FunctionCard({
             />
           </div>
         ) : (
-          <div className="w-12 h-12 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+          <div className="w-12 h-12 flex-shrink-0 bg-gray-100 dark:bg-neutral-900 rounded-lg flex items-center justify-center">
             <span className="text-2xl">🧩</span>
           </div>
         )}

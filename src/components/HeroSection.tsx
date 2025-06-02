@@ -38,7 +38,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="skip" className="max-w-4xl mx-auto px-6 py-8">
+    <section id="skip" className="max-w-3xl mx-auto px-6 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:space-x-10 w-full mb-10">
         <div className="flex md:w-3/4 flex-col mt-6">
           <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-2 text-black dark:text-white">

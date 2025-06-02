@@ -1,18 +1,19 @@
-import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
 
 const blogPosts = [
   {
-    title: "Ace the Javascript Interview - Practical questions to help you clear your next interview",
+    title:
+      "Ace the Javascript Interview - Practical questions to help you clear your next interview",
     views: "17,041 views",
-    href: "/blog/ace-the-javascript-interview"
+    href: "/blogs/ace-the-javascript-interview",
   },
   {
     title: "Free portfolio website template that gets you hired in 2021",
     views: "5,819 views",
-    href: "/blog/developer-portfolio-website"
-  }
-]
+    href: "/blogs/developer-portfolio-website",
+  },
+];
 
 export default function RecentBlogs() {
   return (
@@ -34,12 +35,9 @@ export default function RecentBlogs() {
         ))}
       </div>
 
-      <Link
-        href="/blog"
-        className="text-blue-600 hover:underline font-medium"
-      >
+      <Link href="/blogs" className="text-blue-600 hover:underline font-medium">
         See All Blogs
       </Link>
     </section>
-  )
+  );
 }

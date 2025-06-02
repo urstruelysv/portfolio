@@ -17,7 +17,7 @@ export default async function BlogPage() {
   return (
     <>
       <Navigation />
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Container>
           <div className="flex flex-col justify-center items-start max-w-3xl mx-auto mb-16">
             <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">

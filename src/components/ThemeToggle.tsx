@@ -1,5 +1,4 @@
 "use client";
-
 import { useTheme } from "./ThemeProvider";
 
 export function ThemeToggle() {
@@ -8,7 +7,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      className="h-8 px-3 rounded-full border border-gray-300 dark:border-green-400/50 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
@@ -18,7 +17,7 @@ export function ThemeToggle() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-3.5 h-3.5"
         >
           <path
             strokeLinecap="round"
@@ -33,7 +32,7 @@ export function ThemeToggle() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-3.5 h-3.5"
         >
           <path
             strokeLinecap="round"
