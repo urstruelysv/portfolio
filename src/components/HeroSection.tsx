@@ -80,7 +80,7 @@ export default function HeroSection() {
                     initial="hidden"
                     animate="show"
                     exit="exit"
-                    className="z-20 p-4 rounded-xl bg-white dark:bg-zinc-800 shadow-2xl absolute inset-x-0 w-full min-h-60 text-xs md:text-sm"
+                    className="z-20 p-4 rounded-xl bg-white dark:bg-zinc-800 shadow-2xl inset-x-0 w-full  absolute  min-h-60 text-sm md:text-sm"
                   >
                     <div className="bg-grid-slate-50 dark:bg-grid-zinc-700/30 absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]"></div>
                     <motion.p variants={itemA} className="font-normal py-3">
@@ -156,7 +156,7 @@ export default function HeroSection() {
         </div>
         <div className="relative flex-shrink-1 p-4 md:p-4 md:order-last order-first">
           <a
-            href="https://twitter.com/mannupaaji"
+            href="https://x.com/SaiVamshi_DevOp"
             target="_blank"
             className="block z-[5] overflow-hidden rounded shadow-xl ring-1 ring-slate-900/5 relative bg-white h-20 w-20"
             rel="noopener noreferrer"
