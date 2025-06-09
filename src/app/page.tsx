@@ -12,10 +12,11 @@ export default function Home() {
       <Navigation />
       <main className="max-w-6xl mx-auto px-4 ">
         <HeroSection />
-        <RecentBlogs />
+
         <ProjectsSection />
         <UpcomingProjects />
         <ContactSection />
+        <RecentBlogs />
       </main>
       <Footer />
     </>
