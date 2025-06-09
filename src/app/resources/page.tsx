@@ -98,12 +98,7 @@ export default function ResourcesPage() {
               websiteLink="mantine.dev"
               description="Beautiful Components with Hooks and functions"
             />
-            <ResourcesCard
-              title="Tailwind Box Shadows"
-              link="https://manuarora.in/boxshadows"
-              websiteLink="manuarora.in/boxshadows"
-              description="Beautiful box shadows for TailwindCSS"
-            />
+
             <ResourcesCard
               title="Get Avaataars"
               link="https://getavataaars.com/"

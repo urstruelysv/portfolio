@@ -26,20 +26,20 @@ export default function Home() {
     console.log(data);
     var options = {
       key: process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
-      name: "Manu Arora Pvt Ltd",
+      name: "aethos vison labs  Pvt Ltd",
       currency: data.currency,
       amount: data.amount,
       order_id: data.id,
       description: "Thankyou for your test donation",
-      image: "https://manuarora.in/logo.png",
+      image: "https://Saivamshi.in/logo.png",
       handler: function (response) {
         alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
         alert(response.razorpay_signature);
       },
       prefill: {
-        name: "Manu Arora",
-        email: "manuarorawork@gmail.com",
+        name: "Saivamshi",
+        email: "Saivamshiwork@gmail.com",
         contact: "9999999999",
       },
     };
@@ -74,7 +74,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to{" "}
-          <a href="https://github.com/manuarora700">
+          <a href="https://github.com/urstruelysv">
             Razorpay Payments with Next.js
           </a>
         </h1>
@@ -145,5 +145,3 @@ export default async function handler(req, res) {
   <Image src="/static/images/razorpay/2.png" width={1200} height={700} />
 - Store the API keys in environment variables, example environment file is provided in the source code.
 - We use serverless functions (api routes in Next.js) which acts as our backend to create `order_id`.
-
-  [Source Code](https://github.com/manuarora700/razorpay-payments/tree/master/)

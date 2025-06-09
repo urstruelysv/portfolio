@@ -9,10 +9,10 @@ const footerLinks = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/projects", label: "Projects" },
   { href: "/links", label: "Links" },
-  { href: "https://github.com/manuarora700", label: "GitHub" },
-  { href: "https://linkedin.com/in/manuarora28", label: "LinkedIn" },
-  { href: "https://twitter.com/mannupaaji", label: "Twitter" },
-  { href: "https://instagram.com/maninthere", label: "Instagram" },
+  { href: "https://github.com/urstruelysv", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/saivamshi-gannoju/", label: "LinkedIn" },
+  { href: "https://x.com/SaiVamshi_DevOp", label: "Twitter" },
+  { href: "https://instagram.com/urstruelysv", label: "Instagram" },
   { href: "/freelancing", label: "Freelancing" },
   { href: "/snippets", label: "Snippets" },
   { href: "/tweets", label: "Tweets" },
@@ -63,7 +63,7 @@ export default function Footer() {
             <span className="whitespace-nowrap">Find me on</span>
             <div className="flex gap-3">
               <Link
-                href="https://twitter.com/mannupaaji"
+                href="https://twitter.com/SaiVamshi_DevOp"
                 className="hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
               >
                 <svg
@@ -76,7 +76,7 @@ export default function Footer() {
               </Link>
 
               <Link
-                href="https://www.peerlist.io/manuarora"
+                href="https://www.peerlist.io/SaiVamshi_Dev"
                 className="hover:opacity-100 opacity-70 transition-opacity"
               >
                 <div
