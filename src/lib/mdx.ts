@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypePrism from "rehype-prism-plus";
+import remarkGfm from "remark-gfm";
 
 const rootDirectory = path.join(process.cwd(), "src/data");
 
@@ -66,6 +67,7 @@ export async function getFileBySlug(
     const { data, content } = matter(fileContents);
     const mdxSource = await serialize(content, {
       mdxOptions: {
+        remarkPlugins: [remarkGfm],
         rehypePlugins: [
           [
             rehypePrism,
@@ -80,6 +82,12 @@ export async function getFileBySlug(
             },
           ],
         ],
+        format: "mdx",
+        development: process.env.NODE_ENV === "development",
+      },
+      parseFrontmatter: false,
+      scope: {
+        AnimatedGradient: "AnimatedGradient",
       },
     });
 

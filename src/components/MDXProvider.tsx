@@ -2,6 +2,7 @@
 
 import { MDXProvider as BaseMDXProvider } from "@mdx-js/react";
 import { ReactNode } from "react";
+import AnimatedGradient from "./AnimatedGradient";
 
 const components = {
   h1: (props: any) => (
@@ -62,6 +63,7 @@ const components = {
       {...props}
     />
   ),
+  AnimatedGradient: AnimatedGradient,
   Step: ({
     number,
     title,

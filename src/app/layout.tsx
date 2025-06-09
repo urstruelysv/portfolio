@@ -10,9 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Manu Arora - Developer, Writer, Creator",
+  title: "sai vamshi gannoju - Developer",
   description:
     "Full-Stack developer, JavaScript enthusiast, Freelancer, Tech Blogger and a Learner. I love building products and web apps that impact millions of lives.",
+  icons: "",
 };
 
 export default function RootLayout({
