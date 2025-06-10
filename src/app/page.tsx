@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import UpcomingProjects from "@/components/UpcomingProjects";
-import RecentBlogs from "@/components/ui/RecentBlogsSection";
+import RecentBlogs from "@/components/RecentBlogs";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
