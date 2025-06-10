@@ -13,34 +13,72 @@ interface Props {
   };
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getFileBySlug("blogs", params.slug);
-  if (!post) {
+// Metadata generator
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { slug } = await props.params;
+
+  try {
+    const post = await getFileBySlug("blogs", slug);
+
+    if (!post) {
+      return {
+        title: "Blog Post Not Found",
+        description: "The requested blog post could not be found.",
+      };
+    }
+
+    return {
+      title: `${post.frontmatter.title} - Blog`,
+      description: post.frontmatter.description || "Blog post",
+      openGraph: {
+        title: post.frontmatter.title,
+        description: post.frontmatter.description || "Blog post",
+        type: "article",
+        publishedTime: post.frontmatter.date,
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
     return {
       title: "Blog Post Not Found",
       description: "The requested blog post could not be found.",
     };
   }
-
-  return {
-    title: `${post.frontmatter.title} - Blog`,
-    description: post.frontmatter.description,
-  };
 }
 
+// Static paths
 export async function generateStaticParams() {
-  const posts = await getAllFilesFrontMatter("blogs");
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  try {
+    const posts = await getAllFilesFrontMatter("blogs");
+    return posts.map((post) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
 }
 
-export default async function BlogPost({ params }: Props) {
-  const post = await getFileBySlug("blogs", params.slug);
+// Main component
+export default async function BlogPost(props: Props) {
+  const { slug } = await props.params;
 
-  if (!post) {
+  let post;
+  try {
+    post = await getFileBySlug("blogs", slug);
+    if (!post) notFound();
+  } catch (error) {
+    console.error("Error fetching blog post:", error);
     notFound();
   }
+
+  const formatDate = (dateString?: string) => {
+    try {
+      return format(new Date(dateString || ""), "MMMM d, yyyy");
+    } catch {
+      return format(new Date(), "MMMM d, yyyy");
+    }
+  };
 
   return (
     <>
@@ -52,20 +90,19 @@ export default async function BlogPost({ params }: Props) {
               {post.frontmatter.title || "Untitled"}
             </h1>
             <div className="flex flex-col items-start justify-between w-full mt-2 md:flex-row md:items-center">
-              <div className="flex items-center">
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  {post.frontmatter.author || "Sai Vamshi"}
-                </p>
+              <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
+                <p>{post.frontmatter.author || "Sai Vamshi"}</p>
                 <span className="mx-2 text-gray-500">•</span>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  {post.frontmatter.date
-                    ? format(new Date(post.frontmatter.date), "MMMM d, yyyy")
-                    : format(new Date(), "MMMM d, yyyy")}
-                </p>
+                <p>{formatDate(post.frontmatter.date)}</p>
               </div>
             </div>
-            <div className="prose dark:prose-dark w-full mt-8">
-              <MDXRemote source={post.mdxSource} />
+            <div className="prose prose-gray dark:prose-invert max-w-none w-full mt-8 prose-headings:scroll-mt-20 prose-pre:bg-gray-50 dark:prose-pre:bg-gray-900 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none">
+              <MDXRemote
+                source={post.mdxSource}
+                options={{
+                  parseFrontmatter: true,
+                }}
+              />
             </div>
           </article>
         </Container>

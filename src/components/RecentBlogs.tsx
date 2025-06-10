@@ -6,6 +6,7 @@ import Link from "next/link";
 interface BlogPost {
   title: string;
   views: string;
+  slug: string;
 }
 
 export default function RecentBlogs() {
@@ -14,10 +15,12 @@ export default function RecentBlogs() {
     {
       title: "What is Vibe Coding",
       views: "1.2k views",
+      slug: "vibe-coding",
     },
     {
       title: "Big O humanized",
       views: "2.5k views",
+      slug: "big-o-guide",
     },
   ];
 
@@ -30,7 +33,7 @@ export default function RecentBlogs() {
 
         <div className="space-y-4">
           {blogPosts.map((post, index) => (
-            <div key={index} className="cursor-pointer">
+            <Link key={index} href={`/blogs/${post.slug}`}>
               <Card className="border border-gray-200 dark:border-zinc-800 hover:shadow-md dark:hover:shadow-zinc-900/50 transition-all duration-300 bg-white dark:bg-zinc-900">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start gap-4">
@@ -43,7 +46,7 @@ export default function RecentBlogs() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </Link>
           ))}
         </div>
 

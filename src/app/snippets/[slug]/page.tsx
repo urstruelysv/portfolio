@@ -17,9 +17,10 @@ interface Props {
   };
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
   try {
-    const snippet = await getFileBySlug("snippets", params.slug);
+    const { slug } = await props.params;
+    const snippet = await getFileBySlug("snippets", slug);
     if (!snippet) {
       return {
         title: "Snippet Not Found - Sai Vamshi",
@@ -38,9 +39,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function SnippetPage({ params }: Props) {
+export default async function SnippetPage(props: Props) {
+  const { slug } = await props.params;
   try {
-    const snippet = await getFileBySlug("snippets", params.slug);
+    const snippet = await getFileBySlug("snippets", slug);
 
     if (!snippet || !snippet.mdxSource) {
       notFound();
@@ -64,7 +66,7 @@ export default async function SnippetPage({ params }: Props) {
       </>
     );
   } catch (error) {
-    console.error(`Error rendering snippet ${params.slug}:`, error);
+    console.error(`Error rendering snippet ${slug}:`, error);
     notFound();
   }
 }
