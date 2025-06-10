@@ -5,6 +5,7 @@ import UpcomingProjects from "@/components/UpcomingProjects";
 import RecentBlogs from "@/components/RecentBlogs";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import LifeChangelog from "@/components/LifeChangelog";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <RecentBlogs />
         <ProjectsSection />
         <UpcomingProjects />
+        <LifeChangelog />
         <ContactSection />
       </main>
       <Footer />

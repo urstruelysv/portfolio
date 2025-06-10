@@ -23,17 +23,17 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="sticky top-4 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 max-w-4xl mx-auto">
+      <nav className="sticky top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 max-w-4xl mx-auto pt-6 pb-4 mb-2">
         {/* Background + Blur */}
-        <div className="absolute inset-0 backdrop-blur-md bg-white/60 dark:bg-gray-900/40 dark:border-gray-900/40 rounded-xl pointer-events-none z-[-1]" />
+        <div className="absolute inset-0 backdrop-blur-md bg-white/60 dark:bg-gray-950/40 dark:border-gray-800/40 rounded-xl pointer-events-none z-[-1]" />
         {/* Blurry Edges */}
-        <div className="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-white/60 dark:from-gray-900/40 to-transparent blur-md z-[-1]" />
-        <div className="absolute left-0 right-0 bottom-0 h-4 bg-gradient-to-t from-white/60 dark:from-gray-900/40 to-transparent blur-md z-[-1]" />
+        <div className="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-white/60 dark:from-gray-950/40 to-transparent blur-md z-[-1]" />
+        <div className="absolute left-0 right-0 bottom-0 h-4 bg-gradient-to-t from-white/60 dark:from-gray-950/40 to-transparent blur-md z-[-1]" />
 
         <ThemeToggle />
 
         <div className="relative">
-          <div className="flex items-center space-x-1 bg-gray-50/80 dark:bg-black rounded-full px-2 py-1.5 border border-gray-200/50 dark:border-gray-700/50">
+          <div className="flex items-center space-x-1 bg-gray-50/80 dark:bg-gray-950/80 rounded-full px-2 py-1.5 border border-gray-200/50 dark:border-gray-800/50">
             {navLinks.map((link) => {
               // Only determine active state after hydration to prevent mismatch
               const isActive = isHydrated && pathname === link.href;
@@ -58,7 +58,7 @@ export default function Navigation() {
         </div>
       </nav>
       {/* Spacer to push content below fixed navbar */}
-      <div className="h-6" />
+      <div className="h-10" />
     </>
   );
 }
