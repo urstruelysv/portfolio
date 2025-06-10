@@ -23,7 +23,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="sticky top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 max-w-4xl mx-auto">
+      <nav className="sticky top-4 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 max-w-4xl mx-auto">
         {/* Background + Blur */}
         <div className="absolute inset-0 backdrop-blur-md bg-white/60 dark:bg-gray-900/40 dark:border-gray-900/40 rounded-xl pointer-events-none z-[-1]" />
         {/* Blurry Edges */}
