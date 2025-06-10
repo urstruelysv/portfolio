@@ -95,6 +95,17 @@ export default function HeroSection() {
                       </a>
                     </motion.p>
                     <motion.p variants={itemA} className="font-normal py-3">
+                      Building{" "}
+                      <a
+                        href="https://aethoscompany.in/"
+                        className="inline-block font-bold text-zinc-700 dark:text-zinc-200 hover:underline text-xs md:text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @holo.ai
+                      </a>
+                    </motion.p>
+                    <motion.p variants={itemA} className="font-normal py-3">
                       Helping front-end developers{" "}
                       <a
                         href="https://magicui.com"

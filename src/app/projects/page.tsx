@@ -8,34 +8,49 @@ import Container from "@/components/Container";
 
 const projects = [
   {
-    title: "Moonbeam",
+    title: "Aethos vision Labs",
     description:
-      "Never write from scratch again. Kickstart your next great writing piece with Moonbeam. Your long-form writing AI assistant.",
-    href: "https://gomoonbeam.com",
-    technologies: [
-      "Front-end",
-      "GPT-3",
-      "Next.js",
-      "React",
-      "TailwindCSS",
-      "Chrome Extension",
-    ],
+      "helping businesses and brands turn views into cash with AI solutions and video content.",
+    href: "https://www.aethoscompany.in",
+    technologies: ["Front-end", "Next.js", "React", "TailwindCSS"],
     icon: "🌙",
   },
   {
-    title: "Aceternity",
+    title: "cirro",
     description:
-      "Building modern applications that scale well and are easy to maintain. Cutting edge websites with a pinch of magic, and a lot of love.",
-    href: "https://aceternity.com",
-    technologies: ["Next.js", "React", "TailwindCSS", "Full-Stack"],
+      "E-commerce website for a packaged drinking water brand called cirro - purest of all",
+    href: "https://cirrowtr.in",
+    technologies: [
+      "Next.js",
+      "React",
+      "TailwindCSS",
+      "Full-Stack",
+      "Framer-motion",
+    ],
     icon: "⚡",
   },
   {
-    title: "Algochurn",
+    title: "EchoBoard",
     description:
-      "Practice the most popular algorithmic questions and Front-end interview questions with an interactive IDE and learning environment.",
-    href: "https://algochurn.com",
-    technologies: ["Next.js", "React", "TailwindCSS", "Monaco", "Algorithms"],
+      "A drop-in, privacy-respecting comment & feedback widget for any static or dynamic site.",
+    href: "https://EchoBoard-beta.vercel.app/",
+    technologies: [
+      "Next.js",
+      "Stripe",
+      "TailwindCSS",
+      "Framer",
+      "custom-auth",
+      "Open-ai",
+      "Vercel-SDK",
+    ],
+    icon: "💬",
+  },
+  {
+    title: "DownloadAnything",
+    description:
+      "Universal download solution, download anything from anywhere super fast.",
+    href: "https://downloadanything.vercel.app",
+    technologies: ["FullStack", "Next.js", "React", "TailwindCSS", "API"],
     icon: "🧠",
   },
   {
@@ -53,14 +68,6 @@ const projects = [
     href: "https://placeholdertech.in/",
     technologies: ["Web Dev Agency", "Products", "Freemium"],
     icon: "🏢",
-  },
-  {
-    title: "Feedmeback",
-    description:
-      "The easiest way to add comments or reviews to your static site. Built as part of React 2025.",
-    href: "https://feedmeback-beta.vercel.app/",
-    technologies: ["Next.js", "Stripe", "TailwindCSS"],
-    icon: "💬",
   },
 ];
 
