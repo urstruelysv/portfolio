@@ -2,17 +2,18 @@ import ProjectCard from "./ProjectCard";
 
 const upcomingProjects = [
   {
-    title: "Motion Components",
+    title: "Holome.ai",
+
     description:
-      "Professional, modern and beautiful framer motion components built with Next.js and TailwindCSS",
-    href: "https://aceternity.com/components",
-    technologies: ["NextJS", "Tailwind", "framer-motion"],
+      "AI that help content creators save time and money as they'll no longer need to travel or hire expensive photographers to do photoshoots",
+    href: "#",
+
+    technologies: ["NextJS", "Tailwind", "Flux", "Openai"],
     icon: "🎬",
   },
   {
-    title: "VSCode Resume",
-    description:
-      "A VSCode themed resume for all the web developers out there. A UI which looks exactly like a React file-system based VSCode window with create and update operations.",
+    title: "Video",
+    description: "AI-powered tools to enhance video production efficiency.",
     href: "#",
     technologies: ["VSCode", "React", "TypeScript"],
     icon: "💼",

@@ -18,7 +18,7 @@ export default function BlogCard({
 }: BlogCardProps) {
   return (
     <Link
-      href={`/blog/${slug}`}
+      href={`/blogs/${slug}`}
       className="w-full p-6 border border-gray-200 rounded-lg hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700 transition-all hover:shadow-lg dark:hover:shadow-gray-800/50"
     >
       <div className="flex flex-col space-y-4">

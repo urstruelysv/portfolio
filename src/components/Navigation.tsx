@@ -15,11 +15,6 @@ const navLinks = [
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   return (
     <>
@@ -35,8 +30,7 @@ export default function Navigation() {
         <div className="relative">
           <div className="flex items-center space-x-1 bg-gray-50/80 dark:bg-gray-950/80 rounded-full px-2 py-1.5 border border-gray-200/50 dark:border-gray-800/50">
             {navLinks.map((link) => {
-              // Only determine active state after hydration to prevent mismatch
-              const isActive = isHydrated && pathname === link.href;
+              const isActive = pathname === link.href;
 
               return (
                 <div key={link.href} className="relative">
