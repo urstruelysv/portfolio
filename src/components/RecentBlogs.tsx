@@ -12,11 +12,11 @@ export default function RecentBlogs() {
   // Sample blog posts data - replace with your actual data source
   const blogPosts: BlogPost[] = [
     {
-      title: "Getting Started with Next.js",
+      title: "What is Vibe Coding",
       views: "1.2k views",
     },
     {
-      title: "Understanding TypeScript",
+      title: "Big O humanized",
       views: "2.5k views",
     },
   ];

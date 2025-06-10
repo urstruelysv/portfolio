@@ -88,10 +88,10 @@ export default function ProjectsPage() {
             <p className="text-lg text-gray-600">
               Check out my{" "}
               <Link
-                href="/blog"
+                href="/blogs"
                 className="text-blue-600 hover:text-blue-800 underline"
               >
-                blog
+                Blogs
               </Link>{" "}
               while you're here. I write about my learnings and technology.
             </p>

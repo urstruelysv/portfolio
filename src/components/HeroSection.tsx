@@ -39,7 +39,7 @@ export default function HeroSection() {
 
   return (
     <section id="skip" className="max-w-3xl mx-auto px-6 py-8">
-      <div className="flex flex-col md:flex-row justify-between items-start md:space-x-10 w-full mb-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:space-x-10 w-full mb-2">
         <div className="flex md:w-3/4 flex-col mt-6">
           <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-2 text-black dark:text-white">
             Sai Vamshi Gannoju
@@ -152,7 +152,7 @@ export default function HeroSection() {
             and smooth DevOps—growing into system architecture for resilient
             end-to-end solutions.
           </p>
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-medium mt-2">
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-medium mt-3">
             Here is my{" "}
             <a
               href="/cv"
