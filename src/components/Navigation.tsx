@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -11,7 +10,7 @@ const navLinks = [
   { href: "/snippets", label: "Snippets" },
   { href: "/blogs", label: "blogs" },
   { href: "/resources", label: "Resources" },
-  { href: "/cv", label: "cv/resume" },
+  { href: "/cv", label: "cv" },
 ];
 
 export default function Navigation() {
@@ -52,20 +51,6 @@ export default function Navigation() {
                   >
                     {link.label}
                   </Link>
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-indicator"
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-1 flex h-[1.5px] w-10 -scale-x-100"
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 40,
-                      }}
-                    >
-                      <div className="w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_40%,rgba(14,165,233,0)_100%)]" />
-                      <div className="-ml-[100%] w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_40%,rgba(14,165,233,0)_100%)]" />
-                    </motion.div>
-                  )}
                 </div>
               );
             })}
