@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
@@ -50,7 +49,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         success: true,
-        message: "Thank you! Your email has been updated in our records.",
+        message: "Thank you! i will reach out to you soon.",
         contact: {
           id: updatedContact.id,
           email: updatedContact.email,
@@ -93,8 +92,6 @@ export async function POST(request: NextRequest) {
       { error: "Internal server error. Please try again later." },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -133,7 +130,5 @@ export async function GET(request: NextRequest) {
       { error: "Failed to fetch contacts" },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
