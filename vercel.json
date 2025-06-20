@@ -1,9 +1,5 @@
 {
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "outputDirectory": " .next",
-  "functions": {
-    "app/api/**/*.js": { "runtime": "edge" },
-    "app/api/**/*.ts": { "runtime": "edge" }
-  }
+  "outputDirectory": ".next"
 }
