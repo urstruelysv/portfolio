@@ -15,6 +15,25 @@ const navLinks = [
 
 export default function Navigation() {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <>
@@ -27,7 +46,7 @@ export default function Navigation() {
 
         <ThemeToggle />
 
-        <div className="relative">
+        <div className="relative hidden md:block">
           <div className="flex items-center space-x-1 bg-gray-50/80 dark:bg-gray-950/80 rounded-full px-2 py-1.5 border border-gray-200/50 dark:border-gray-800/50">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -50,7 +69,72 @@ export default function Navigation() {
             })}
           </div>
         </div>
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 rounded-full bg-gray-50/80 dark:bg-gray-950/80 border border-gray-200/50 dark:border-gray-800/50 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+            aria-label="Toggle navigation menu"
+          >
+            {isMenuOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </nav>
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-white/90 dark:bg-gray-950/90 backdrop-blur-lg md:hidden"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className="flex flex-col items-start justify-start h-full pt-24 px-6 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`w-full p-4 rounded-lg text-left text-lg font-medium transition-all duration-300
+                    ${
+                      isActive
+                        ? "bg-gray-100 dark:bg-gray-800 text-green-600 dark:text-green-400"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
       {/* Spacer to push content below fixed navbar */}
       <div className="h-10" />
     </>

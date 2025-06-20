@@ -25,13 +25,13 @@ export default function RecentBlogs() {
   ];
 
   return (
-    <section className="max-w-3xl mx-auto px-6 py-8">
+    <section className="max-w-3xl mx-auto px-6 py-8 ">
       <div className="space-y-6">
-        <h2 className="font-bold text-3xl md:text-4xl tracking-tight mb-2 text-black dark:text-white">
+        <h2 className="font-bold text-3xl md:text-4xl tracking-tight mb-3 text-black dark:text-white">
           Recent Blogs
         </h2>
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {blogPosts.map((post, index) => (
             <Link key={index} href={`/blogs/${post.slug}`}>
               <Card className="border border-gray-200 dark:border-zinc-800 hover:shadow-md dark:hover:shadow-zinc-900/50 transition-all duration-300 bg-white dark:bg-zinc-900">
