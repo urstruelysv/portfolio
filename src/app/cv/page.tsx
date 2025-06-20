@@ -7,7 +7,7 @@ import Container from "@/components/Container";
 
 export default function Resume() {
   const handleDownload = () => {
-    const resumeUrl = "/CV.pdf"; // Public path
+    const resumeUrl = "/CV1.pdf"; // Public path
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "Full_Stack_Developer_Resume.pdf";
@@ -36,7 +36,7 @@ export default function Resume() {
             <div className="w-full md:w-1/2 border rounded-lg shadow-lg overflow-hidden">
               <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-2">
                 <iframe
-                  src="/CV.pdf#view=FitH"
+                  src="/CV1.pdf#view=FitH"
                   title="Resume Preview"
                   className="w-full h-72 md:h-96"
                 />
