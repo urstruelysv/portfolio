@@ -10,9 +10,12 @@
     "format": "bunx biome format --write"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.3.3",
+    "@prisma/client": "^6.10.1",
+    "@prisma/extension-accelerate": "^2.0.1",
     "@radix-ui/react-slot": "^1.2.3",
     "@types/mdx": "^2.0.13",
     "class-variance-authority": "^0.7.1",
@@ -23,13 +26,16 @@
     "lucide-react": "^0.475.0",
     "next": "^14.1.0",
     "next-mdx-remote": "^5.0.0",
+    "prisma": "^6.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^6.0.0",
+    "react-hook-form": "^7.58.1",
     "rehype-prism-plus": "^2.0.1",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
