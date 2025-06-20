@@ -1,0 +1,10 @@
+{
+  "installCommand": "bun install",
+  "buildCommand": "bun run build",
+  "outputDirectory": ".next",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "@vercel/node@18.x"
+    }
+  }
+}
