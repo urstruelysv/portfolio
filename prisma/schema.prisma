@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Contact {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   email       String   @unique
   submittedAt DateTime @default(now())
   createdAt   DateTime @default(now())
