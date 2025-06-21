@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { PrismaClient } from "@prisma/client";
-
-// Initialize Prisma client
-const prisma = new PrismaClient();
+import { prisma } from "../../../lib/prisma";
 
 // Zod schema for request validation
 const contactSchema = z.object({
