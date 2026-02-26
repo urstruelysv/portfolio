@@ -6,7 +6,7 @@ logo: "tailwind.png"
 
 1. Create the boilerplate for the Button
 
-```jsx:GradientBorder.jsx
+```jsx
 <div class="flex h-40 w-full flex-row items-center justify-center">
   <button class="inline-block rounded-md bg-white bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-[length:400%_400%] p-1">
     <span class="block rounded-md bg-slate-900 px-5 py-3 font-bold text-white"> algochurn.com </span>
@@ -17,7 +17,7 @@ logo: "tailwind.png"
 
 2. Add the required `border` animation in `tailwind.config.js` file
 
-```js:tailwind.config.js
+```js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
@@ -40,7 +40,7 @@ module.exports = {
 
 3. Add `animate-border` class to the Button.
 
-```jsx:GradientBorder.jsx
+```jsx
 <div class="flex h-40 w-full flex-row items-center justify-center">
   <button class="animate-border inline-block rounded-md bg-white bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-[length:400%_400%] p-1">
     <span class="block rounded-md bg-slate-900 px-5 py-3 font-bold text-white"> algochurn.com </span>
@@ -50,4 +50,6 @@ module.exports = {
 
 4. Demo
 
+```jsx
 <AnimatedGradient />
+```

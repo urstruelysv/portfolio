@@ -4,11 +4,13 @@ description: "Meteor animation for backgrounds"
 logo: "react.png"
 ---
 
+```jsx
 <MeteorEffect />
+```
 
 1. The core component that we can embed into any `div` or `section` which is positioned `relative`.
 
-```jsx:Meteors.jsx
+```jsx
 export const Meteors = ({ number }) => {
   return [...new Array(number || 20).fill(true)].map((el, idx) => (
     <span
@@ -30,7 +32,7 @@ export const Meteors = ({ number }) => {
 
 2. Add a `::before` pseudo element to the `meteor` container - this will create the Tail of the meteor.
 
-```css:meteors.module.css
+```css
 .meteor::before {
   content: "";
   position: absolute;
@@ -45,7 +47,7 @@ export const Meteors = ({ number }) => {
 
 3. Add the `meteor-effect` animation and `meteor` keyframe in `tailwind.config.js` file
 
-```js:tailwind.config.js
+```js
  theme: {
     extend: {
       animation: {
@@ -68,7 +70,7 @@ export const Meteors = ({ number }) => {
 
 4. Add the `<Meteors />` component to any of the pages. Here, we'll embed it as shown in the screenshot above.
 
-```jsx:MeteorEffect.jsx
+```jsx
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -142,9 +144,11 @@ export default MeteorEffect;
 
 ```
 
+```html
 <a
   href="https://stackblitz.com/edit/vite-react-tailwind-ks7g7a?embed=1&file=src/App.jsx&view=preview"
   target="__blank"
 >
   Stackblitz Link
 </a>
+```

@@ -6,14 +6,14 @@ logo: "firebase.png"
 
 Create a User Context
 
-```typescript:context.ts
+```typescript
 import { createContext } from 'react'
 export const UserContext = createContext({ user: null, authLoading: true })
 ```
 
 Add the Provider in the App.js (Next.js `_app.jsx` file is used here)
 
-```typescript:_app.jsx
+```typescript
 import 'regenerator-runtime/runtime'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
@@ -38,7 +38,7 @@ export default MyApp
 
 Initialize firebase app with YOUR configurations.
 
-```typescript:firebase.ts
+```typescript
 
 import { initializeApp, getApps, getApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
@@ -85,7 +85,7 @@ export const STATE_CHANGED = 'state_changed'
 
 Hook to check for auth state change
 
-```typescript:hooks.ts
+```typescript
 import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
 import { auth, firestore } from './firebase'
 import { useEffect, useState } from 'react'
@@ -117,7 +117,7 @@ When auth state changes - context updates and components rerender.
 
 Use the logic in your protected routes and login components
 
-```typescript:login.tsx
+```typescript
 import { signInWithPopup } from 'firebase/auth'
 import { doc, getFirestore, getDoc, setDoc } from 'firebase/firestore'
 import type { NextPage } from 'next'
@@ -204,7 +204,7 @@ export default Login
 
 ```
 
-```typescript:Dashboard.tsx
+```typescript
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'

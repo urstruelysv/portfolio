@@ -78,7 +78,9 @@ export const getNowPlaying = async () => {
 
 ## Usage
 
+```jsx
 <Step number={1} title="Create Spotify Application" />
+```
 
 First, we need to create a Spotify application to give us credentials to authenticate with the API.
 
@@ -92,7 +94,9 @@ First, we need to create a Spotify application to give us credentials to authent
 
 All done! You now have a properly configured Spotify application and the correct credentials to make requests.
 
+```jsx
 <Step number={2} title="Authentication" />
+```
 
 There are a variety of ways to authenticate with the Spotify API, depending on your application. Since we only need permission granted _once_, we'll use the [Authorization Code Flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow).
 
@@ -124,7 +128,9 @@ curl -H "Authorization: Basic <base64 encoded client_id:client_secret>"
 
 This will return a JSON response containing a `refresh_token`. This token is [valid indefinitely](https://github.com/spotify/web-api/issues/374) unless you revoke access, so we'll want to save this in an environment variable.
 
+```jsx
 <Step number={3} title="Add Environment Variables" />
+```
 
 To securely access the API, we need to include the secret with each request.
 We also _do not_ want to commit secrets to git. Thus, we should use an environment variable.
