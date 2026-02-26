@@ -4,11 +4,13 @@ description: "Hover gradient reveal effect with Tailwind CSS"
 logo: "react.png"
 ---
 
+```jsx
 <PreviewContainer>
   <CardHoverEffect />
 </PreviewContainer>
+```
 
-```jsx:CardHoverEffect.jsx
+```jsx
 import React from "react";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
@@ -94,7 +96,7 @@ function Effect({ mouseX, mouseY, ...gridProps }) {
 
 ```
 
-```jsx:GridPattern.jsx
+```jsx
 export function GridPattern({ width, height, x, y, squares, ...props }) {
   let patternId = new Date().getTime();
 

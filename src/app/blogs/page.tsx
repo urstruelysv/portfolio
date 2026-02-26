@@ -2,8 +2,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import BlogCard from "@/components/BlogCard";
-import { getAllFilesFrontMatter, FrontMatter } from "@/lib/mdx";
-import { Metadata } from "next";
+import { blogs } from "#site/content";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Blogs - Sai Vamshi",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts: FrontMatter[] = await getAllFilesFrontMatter("blogs");
+  const posts = blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <>
@@ -31,11 +31,11 @@ export default async function BlogPage() {
               {posts.map((post) => (
                 <BlogCard
                   key={post.slug}
-                  title={post.title || "Untitled"}
+                  title={post.title}
                   slug={post.slug}
-                  description={post.description || "No description available"}
-                  date={post.date || new Date().toISOString()}
-                  author={post.author || "Sai Vamshi"}
+                  description={post.description}
+                  date={post.date}
+                  author={post.author}
                 />
               ))}
             </div>

@@ -2,8 +2,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import FunctionCard from "@/components/FunctionCard";
-import { getAllFilesFrontMatter, FrontMatter } from "@/lib/mdx";
-import { Metadata } from "next";
+import { snippets } from "#site/content";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Snippets - Sai Vamshi",
@@ -12,8 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default async function SnippetsPage() {
-  const snippets: FrontMatter[] = await getAllFilesFrontMatter("snippets");
-
   return (
     <>
       <Navigation />
@@ -36,12 +34,10 @@ export default async function SnippetsPage() {
               {snippets.map((snippet) => (
                 <FunctionCard
                   key={snippet.slug}
-                  title={snippet.title || "Untitled"}
+                  title={snippet.title}
                   slug={snippet.slug}
                   logo={snippet.logo}
-                  description={
-                    snippet.description || "No description available"
-                  }
+                  description={snippet.description}
                 />
               ))}
             </div>

@@ -6,7 +6,7 @@ logo: "sendgrid.png"
 
 ## API call
 
-```js:/api/sendgrid.js
+```js
 import sendgrid from "@sendgrid/mail";
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
@@ -17,7 +17,7 @@ export default async (req, res) => {
       to: req.body.email,
       from: "Saivamshiwork@gmail.com",
       subject: "Greetings! Thankyou for contacting me",
-      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      html: `
       <html lang="en">
       <head>
         <meta charset="utf-8">
@@ -76,12 +76,16 @@ export default async (req, res) => {
 
 ## Usage
 
+```jsx
 <Step number={1} title="Create an account on Sendgrid" />
+```
 
 - Create an account on [sendgrid](https://signup.sendgrid.com/).
 - Generate an [API KEY](https://app.sendgrid.com/guide/integrate/langs/nodejs)
 
+```jsx
 <Step number={2} title="Authenticate sender" />
+```
 
 Sendgrid requires you to authenticate yourself (email account) which you want the emails to be sent from. For that they have clearly mentioned instructions.
 
@@ -90,19 +94,23 @@ Sendgrid requires you to authenticate yourself (email account) which you want th
 - Fill out the form with all your details.
 - Verify by checking your mail and clicking on Verify button.
 
+```jsx
 <Step number={3} title="Set environment variable" />
+```
 
 In your `.env` file, create an entry for `SENDGRID_API_KEY` and paste the credentials you retrieved from the sendgrid portal.
 
 **NOTE**: DO NOT push this file to GitHub.
 
+```jsx
 <Step number={4} title="Install @sendgrid/mail node package" />
+```
 
 - `npm install @sendgrid/mail`
 - We use two methods from the package: `sendgrid.setApiKey()` and `sendgrid.send()`
 
 A live demo of this API can be found on my [homepage](https://Saivamshi.in). I've used Sendgrid on my `Contact` component on the Home Page and Blog page.
 
-<!--
+{/*
   [Live Demo](http://Saivamshi.in/demos/demo/movingcard)
-  [Source Code](https://github.com/Saivamshi700/portfolio-website/tree/master/pages/demos/demo/movingcard) -->
+  [Source Code](https://github.com/Saivamshi700/portfolio-website/tree/master/pages/demos/demo/movingcard) */}

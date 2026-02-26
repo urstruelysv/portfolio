@@ -6,7 +6,7 @@ logo: "razorpay.png"
 
 ## Code
 
-```js:index.js
+```js
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
@@ -91,7 +91,7 @@ export default function Home() {
 
 ```
 
-```js:/api/razorpay.js
+```js
 const Razorpay = require("razorpay");
 const shortid = require("shortid");
 
@@ -137,11 +137,17 @@ export default async function handler(req, res) {
 
 ## Usage
 
+```jsx
 <Step number={1} title="Create an Account on Razorpay" />
+```
 
 - Head over to [Razorpay](https://razorpay.com) and create an account
+  ```jsx
   <Image src="/static/images/razorpay/1.png" width={1200} height={700} />
+  ```
 - Generate the [API keys](https://https://dashboard.razorpay.com/app/keys) which can be found in the `Test Mode` dashboard
+  ```jsx
   <Image src="/static/images/razorpay/2.png" width={1200} height={700} />
+  ```
 - Store the API keys in environment variables, example environment file is provided in the source code.
 - We use serverless functions (api routes in Next.js) which acts as our backend to create `order_id`.
