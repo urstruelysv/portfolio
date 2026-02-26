@@ -5,7 +5,7 @@ import { blogs } from "#site/content";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { format } from "date-fns";
-import VeliteMDX from "@/components/VeliteMDX";
+import { MDXContent } from "@/components/MDXContent";
 
 interface Props {
   params: Promise<{
@@ -73,7 +73,7 @@ export default async function BlogPost({ params }: Props) {
             </div>
 
             <div className="prose prose-gray dark:prose-invert max-w-none w-full mt-8">
-              <VeliteMDX code={post.content} />
+              <MDXContent code={post.content} />
             </div>
           </article>
         </Container>

@@ -3,10 +3,8 @@ import { notFound } from "next/navigation";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
-import MDXLayout from "@/components/MDXLayout";
 import { snippets } from "#site/content";
-import "./mdx-styles.css";
-import VeliteMDX from "@/components/VeliteMDX";
+import { MDXContent } from "@/components/MDXContent";
 
 interface Props {
   params: Promise<{
@@ -30,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return snippets.map((s) => ({
     slug: s.slug,
   }));
@@ -49,11 +47,9 @@ export default async function SnippetPage({ params }: Props) {
         <Container>
           <div className="flex flex-col justify-center items-start max-w-3xl mx-auto mb-16">
             <div className="w-full">
-              <MDXLayout>
-                <div className="prose prose-gray dark:prose-invert max-w-none">
-                  <VeliteMDX code={snippet.content} />
-                </div>
-              </MDXLayout>
+              <div className="prose prose-gray dark:prose-invert max-w-none">
+                <MDXContent code={snippet.content} />
+              </div>
             </div>
           </div>
         </Container>
