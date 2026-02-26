@@ -1,4 +1,12 @@
-# Sai Vamshi Portfolio - Todo List
+## Refactor Tasks
+
+- [x] Upgrade to Next.js 16 and React 19
+- [x] Migrate from next-mdx-remote to Velite
+- [x] Remove ESLint in favor of Biome
+- [x] Clean up redundant MDX tooling
+- [ ] Implement Dashboard at `/dashboard` for easy blog creation
+- [ ] Migrate blog post pages to use Velite data
+- [ ] Migrate snippet pages to use Velite data
 
 ## Main Structure
 
