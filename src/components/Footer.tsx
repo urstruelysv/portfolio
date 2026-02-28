@@ -4,22 +4,16 @@ import Link from "next/link";
 
 const footerLinks = [
   { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
+  { href: "/blogs", label: "Blogs" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/projects", label: "Projects" },
-  { href: "/links", label: "Links" },
+  { href: "/snippets", label: "Snippets" },
+  { href: "/resources", label: "Resources" },
+  { href: "/cv", label: "CV" },
   { href: "https://github.com/urstruelysv", label: "GitHub" },
   { href: "https://www.linkedin.com/in/saivamshi-gannoju/", label: "LinkedIn" },
   { href: "https://x.com/SaiVamshi_DevOp", label: "Twitter" },
   { href: "https://instagram.com/urstruelysv", label: "Instagram" },
-  { href: "/freelancing", label: "Freelancing" },
-  { href: "/snippets", label: "Snippets" },
-  { href: "/tweets", label: "Tweets" },
-  { href: "/resources", label: "Resources" },
-  { href: "/demos", label: "Live Demos" },
-  { href: "/freecodecamp", label: "freeCodeCamp" },
-  { href: "/boxshadows", label: "Box Shadows" },
-  { href: "/design-inspiration", label: "Design Inspiration" },
 ];
 
 const itemVariants = {
