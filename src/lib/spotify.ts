@@ -1,13 +1,20 @@
-const client_id = process.env.SPOTIFY_CLIENT_ID;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
-
-const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
-const NOW_PLAYING_ENDPOINT =
-  "https://api.spotify.com/v1/me/player/currently-playing";
-const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
-
 const getAccessToken = async () => {
+  const client_id = process.env.SPOTIFY_CLIENT_ID;
+  const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+  const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
+
+  if (!client_id || !client_secret || !refresh_token) {
+    console.error("Missing Spotify Environment Variables:", {
+      client_id: !!client_id,
+      client_secret: !!client_secret,
+      refresh_token: !!refresh_token,
+    });
+    return { error: "missing_env_vars" };
+  }
+
+  const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
+  const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
+
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
     headers: {
@@ -16,7 +23,7 @@ const getAccessToken = async () => {
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: refresh_token ?? "",
+      refresh_token: refresh_token,
     }),
     next: {
       revalidate: 0,
@@ -35,9 +42,10 @@ export const getNowPlaying = async () => {
   const { access_token } = tokenData;
 
   if (!access_token) {
-    console.error("No Spotify access token found.");
     return { status: 500 };
   }
+
+  const NOW_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing";
 
   const response = await fetch(NOW_PLAYING_ENDPOINT, {
     headers: {
@@ -47,10 +55,6 @@ export const getNowPlaying = async () => {
       revalidate: 0,
     },
   });
-
-  if (response.status === 204) {
-    return response;
-  }
 
   return response;
 };
