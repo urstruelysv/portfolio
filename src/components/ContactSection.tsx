@@ -1,12 +1,12 @@
 "use client";
-import Link from "next/link";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 // Zod schema for email validation
 const contactSchema = z.object({
@@ -57,7 +57,7 @@ export default function ContactSection() {
       if (response.ok) {
         setSubmitStatus("success");
         setThankYouMessage(
-          `Thank you! I've received your email (${data.email}) and will get back to you soon. 🚀`
+          `Thank you! I've received your email (${data.email}) and will get back to you soon. 🚀`,
         );
         reset();
 
@@ -73,7 +73,7 @@ export default function ContactSection() {
       console.error("Error submitting form:", error);
       setSubmitStatus("error");
       setThankYouMessage(
-        "Oops! Something went wrong. Please try again or reach out via WhatsApp."
+        "Oops! Something went wrong. Please try again or reach out via WhatsApp.",
       );
 
       // Clear error message after 5 seconds
@@ -115,7 +115,7 @@ export default function ContactSection() {
           </div>
 
           {/* Horizontal separator line */}
-          <div className="border-t border-zinc-200 dark:border-zinc-700 my-6"/>
+          <div className="border-t border-zinc-200 dark:border-zinc-700 my-6" />
 
           <div className="max-w-md">
             <p className="text-zinc-600 dark:text-zinc-400 mb-3 text-base">
@@ -166,7 +166,7 @@ export default function ContactSection() {
                 >
                   {isSubmitting ? (
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"/>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       <span>Sending...</span>
                     </div>
                   ) : (
@@ -178,15 +178,6 @@ export default function ContactSection() {
           </div>
         </div>
       </motion.div>
-
-      {/* Spotify Status */}
-      <div className="mt-8 text-center">
-        <div className="flex items-center justify-center px-4 gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-          <div className="w-2 h-2 bg-red-500 rounded-full"/>
-          <span>Not Playing</span>
-          <span className="font-medium">Spotify</span>
-        </div>
-      </div>
     </section>
   );
 }
