@@ -11,7 +11,7 @@ async function sha256(text: string) {
     .join("");
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const password = process.env.DASHBOARD_PASSWORD ?? "";
   if (!password) return NextResponse.next();
 
