@@ -12,7 +12,7 @@ export async function login(formData: FormData) {
     redirect(`/login?${params.toString()}`);
   }
 
-  if (!setAuthCookie()) {
+  if (!(await setAuthCookie())) {
     const params = new URLSearchParams({ next: nextPath, missing: "1" });
     redirect(`/login?${params.toString()}`);
   }
@@ -21,6 +21,6 @@ export async function login(formData: FormData) {
 }
 
 export async function logout() {
-  clearAuthCookie();
+  await clearAuthCookie();
   redirect("/login");
 }

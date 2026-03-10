@@ -1,0 +1,416 @@
+"use client";
+
+import { useMemo, useState, useTransition } from "react";
+import {
+  createBlogPost,
+  createSnippet,
+  getBlog,
+  getSnippet,
+  updateBlogPost,
+  updateSnippet,
+} from "./actions";
+import { logout } from "@/app/login/actions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+
+type BlogListItem = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+};
+
+type SnippetListItem = {
+  slug: string;
+  title: string;
+  description: string;
+  logo: string;
+};
+
+type BlogFormState = {
+  mode: "create" | "edit";
+  originalSlug: string;
+  title: string;
+  slug: string;
+  description: string;
+  date: string;
+  content: string;
+};
+
+type SnippetFormState = {
+  mode: "create" | "edit";
+  originalSlug: string;
+  title: string;
+  slug: string;
+  description: string;
+  logo: string;
+  content: string;
+};
+
+const emptyBlog = (): BlogFormState => ({
+  mode: "create",
+  originalSlug: "",
+  title: "",
+  slug: "",
+  description: "",
+  date: new Date().toISOString().split("T")[0],
+  content: "",
+});
+
+const emptySnippet = (): SnippetFormState => ({
+  mode: "create",
+  originalSlug: "",
+  title: "",
+  slug: "",
+  description: "",
+  logo: "",
+  content: "",
+});
+
+interface Props {
+  blogs: BlogListItem[];
+  snippets: SnippetListItem[];
+}
+
+export default function DashboardClient({ blogs, snippets }: Props) {
+  const [isPending, startTransition] = useTransition();
+  const [activeForm, setActiveForm] = useState<"blog" | "snippet">("blog");
+  const [blogMessage, setBlogMessage] = useState("");
+  const [snippetMessage, setSnippetMessage] = useState("");
+  const [blogForm, setBlogForm] = useState<BlogFormState>(emptyBlog);
+  const [snippetForm, setSnippetForm] = useState<SnippetFormState>(emptySnippet);
+
+  const sortedBlogs = useMemo(
+    () => [...blogs].sort((a, b) => (b.date || "").localeCompare(a.date || "")),
+    [blogs],
+  );
+
+  function setBlogField<K extends keyof BlogFormState>(key: K, value: BlogFormState[K]) {
+    setBlogForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function setSnippetField<K extends keyof SnippetFormState>(key: K, value: SnippetFormState[K]) {
+    setSnippetForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function resetBlogForm() {
+    setBlogMessage("");
+    setBlogForm(emptyBlog());
+  }
+
+  function resetSnippetForm() {
+    setSnippetMessage("");
+    setSnippetForm(emptySnippet());
+  }
+
+  function handleEditBlog(slug: string) {
+    setBlogMessage("");
+    startTransition(async () => {
+      try {
+        const data = await getBlog(slug);
+        setBlogForm({
+          mode: "edit",
+          originalSlug: data.slug,
+          title: data.title,
+          slug: data.slug,
+          description: data.description,
+          date: data.date || new Date().toISOString().split("T")[0],
+          content: data.content,
+        });
+      } catch (error) {
+        setBlogMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
+  function handleEditSnippet(slug: string) {
+    setSnippetMessage("");
+    startTransition(async () => {
+      try {
+        const data = await getSnippet(slug);
+        setSnippetForm({
+          mode: "edit",
+          originalSlug: data.slug,
+          title: data.title,
+          slug: data.slug,
+          description: data.description,
+          logo: data.logo || "",
+          content: data.content,
+        });
+      } catch (error) {
+        setSnippetMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
+  async function handleBlogSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBlogMessage("");
+    const payload = {
+      title: blogForm.title,
+      slug: blogForm.slug,
+      description: blogForm.description,
+      date: blogForm.date,
+      content: blogForm.content,
+      originalSlug: blogForm.originalSlug,
+    };
+
+    startTransition(async () => {
+      try {
+        const result = blogForm.mode === "edit"
+          ? await updateBlogPost(payload)
+          : await createBlogPost(payload);
+        if (!result.success) {
+          setBlogMessage("Error: " + (result.error ?? "Invalid blog data"));
+          return;
+        }
+        setBlogMessage(blogForm.mode === "edit" ? "Blog post updated." : "Blog post created.");
+        if (blogForm.mode === "edit") {
+          setBlogForm((prev) => ({ ...prev, originalSlug: prev.slug }));
+        }
+      } catch (error) {
+        setBlogMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
+  async function handleSnippetSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSnippetMessage("");
+    const payload = {
+      title: snippetForm.title,
+      slug: snippetForm.slug,
+      description: snippetForm.description,
+      logo: snippetForm.logo || undefined,
+      content: snippetForm.content,
+      originalSlug: snippetForm.originalSlug,
+    };
+
+    startTransition(async () => {
+      try {
+        const result = snippetForm.mode === "edit"
+          ? await updateSnippet(payload)
+          : await createSnippet(payload);
+        if (!result.success) {
+          setSnippetMessage("Error: " + (result.error ?? "Invalid snippet data"));
+          return;
+        }
+        setSnippetMessage(snippetForm.mode === "edit" ? "Snippet updated." : "Snippet created.");
+        if (snippetForm.mode === "edit") {
+          setSnippetForm((prev) => ({ ...prev, originalSlug: prev.slug }));
+        }
+      } catch (error) {
+        setSnippetMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
+  return (
+    <>
+      <Navigation />
+      <main className="max-w-5xl mx-auto px-4 py-12">
+        <div className="rounded-3xl border border-gray-200 bg-white/80 shadow-sm backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-900/70">
+          <div className="p-6 md:p-8 space-y-8">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant={activeForm === "blog" ? "default" : "outline"}
+                  onClick={() => setActiveForm("blog")}
+                >
+                  Blogs
+                </Button>
+                <Button
+                  type="button"
+                  variant={activeForm === "snippet" ? "default" : "outline"}
+                  onClick={() => setActiveForm("snippet")}
+                >
+                  Snippets
+                </Button>
+              </div>
+              <form action={logout}>
+                <Button type="submit" variant="outline">Logout</Button>
+              </form>
+            </div>
+
+            {activeForm === "blog" ? (
+              <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+              <CardHeader>
+                <CardTitle>Posts</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button type="button" className="w-full" variant="outline" onClick={resetBlogForm}>
+                  New Post
+                </Button>
+                <div className="space-y-2">
+                  {sortedBlogs.map((post) => (
+                    <div key={post.slug} className="border border-gray-200 dark:border-zinc-800/80 rounded-md p-3 bg-white/80 dark:bg-zinc-900/60">
+                      <div className="text-sm font-medium">{post.title}</div>
+                      <div className="text-xs text-muted-foreground">{post.date}</div>
+                      <div className="mt-2 flex gap-2">
+                        <Button type="button" size="sm" variant="outline" onClick={() => handleEditBlog(post.slug)}>
+                          Edit
+                        </Button>
+                        <Button type="button" size="sm" variant="secondary" asChild>
+                          <a href={`/blogs/${post.slug}`} target="_blank" rel="noreferrer">
+                            View
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+                </Card>
+
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+              <CardHeader>
+                <CardTitle>{blogForm.mode === "edit" ? "Edit Blog Post" : "Create New Blog Post"}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleBlogSubmit} className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Title</label>
+                    <Input value={blogForm.title} onChange={(e) => setBlogField("title", e.target.value)} required />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Slug</label>
+                    <Input value={blogForm.slug} onChange={(e) => setBlogField("slug", e.target.value)} required />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Description</label>
+                    <Input
+                      value={blogForm.description}
+                      onChange={(e) => setBlogField("description", e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Date</label>
+                    <Input value={blogForm.date} onChange={(e) => setBlogField("date", e.target.value)} required />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Content (Markdown)</label>
+                    <Textarea
+                      value={blogForm.content}
+                      onChange={(e) => setBlogField("content", e.target.value)}
+                      className="min-h-[300px]"
+                      required
+                    />
+                  </div>
+                  <Button type="submit" disabled={isPending}>
+                    {isPending ? "Saving..." : blogForm.mode === "edit" ? "Update Post" : "Create Post"}
+                  </Button>
+                  {blogMessage && (
+                    <p className={`mt-4 text-sm ${blogMessage.includes("Error") ? "text-red-500" : "text-green-500"}`}>
+                      {blogMessage}
+                    </p>
+                  )}
+                </form>
+              </CardContent>
+                </Card>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+              <CardHeader>
+                <CardTitle>Snippets</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button type="button" className="w-full" variant="outline" onClick={resetSnippetForm}>
+                  New Snippet
+                </Button>
+                <div className="space-y-2">
+                  {snippets.map((snippet) => (
+                    <div key={snippet.slug} className="border border-gray-200 dark:border-zinc-800/80 rounded-md p-3 bg-white/80 dark:bg-zinc-900/60">
+                      <div className="text-sm font-medium">{snippet.title}</div>
+                      <div className="text-xs text-muted-foreground">{snippet.slug}</div>
+                      <div className="mt-2 flex gap-2">
+                        <Button type="button" size="sm" variant="outline" onClick={() => handleEditSnippet(snippet.slug)}>
+                          Edit
+                        </Button>
+                        <Button type="button" size="sm" variant="secondary" asChild>
+                          <a href={`/snippets/${snippet.slug}`} target="_blank" rel="noreferrer">
+                            View
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+                </Card>
+
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+              <CardHeader>
+                <CardTitle>{snippetForm.mode === "edit" ? "Edit Snippet" : "Create New Snippet"}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSnippetSubmit} className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Title</label>
+                    <Input
+                      value={snippetForm.title}
+                      onChange={(e) => setSnippetField("title", e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Slug</label>
+                    <Input
+                      value={snippetForm.slug}
+                      onChange={(e) => setSnippetField("slug", e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Description</label>
+                    <Input
+                      value={snippetForm.description}
+                      onChange={(e) => setSnippetField("description", e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Logo (optional)</label>
+                    <Input
+                      value={snippetForm.logo}
+                      onChange={(e) => setSnippetField("logo", e.target.value)}
+                      placeholder="logo.svg"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Content (Markdown)</label>
+                    <Textarea
+                      value={snippetForm.content}
+                      onChange={(e) => setSnippetField("content", e.target.value)}
+                      className="min-h-[240px]"
+                      required
+                    />
+                  </div>
+                  <Button type="submit" disabled={isPending}>
+                    {isPending ? "Saving..." : snippetForm.mode === "edit" ? "Update Snippet" : "Create Snippet"}
+                  </Button>
+                  {snippetMessage && (
+                    <p className={`mt-4 text-sm ${snippetMessage.includes("Error") ? "text-red-500" : "text-green-500"}`}>
+                      {snippetMessage}
+                    </p>
+                  )}
+                </form>
+              </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
