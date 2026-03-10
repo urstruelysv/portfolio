@@ -6,6 +6,8 @@ import Navigation from "@/components/Navigation";
 import NowPlaying from "@/components/NowPlaying";
 import ProjectsSection from "@/components/ProjectsSection";
 import RecentBlogs from "@/components/RecentBlogs";
+
+export const dynamic = "force-dynamic";
 import UpcomingProjects from "@/components/UpcomingProjects";
 
 export default function Home() {

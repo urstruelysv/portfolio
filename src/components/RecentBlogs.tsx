@@ -1,9 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { getRecentBlogs } from "@/lib/content";
+import { format } from "date-fns";
 
 export default async function RecentBlogs() {
-  const recentPosts = await getRecentBlogs(2);
+  const recentPosts = await getRecentBlogs(3);
 
   return (
     <section className="max-w-3xl mx-auto px-6 py-8 ">
@@ -21,6 +22,10 @@ export default async function RecentBlogs() {
                     <h3 className="text-lg font-medium text-zinc-800 dark:text-zinc-100 leading-relaxed hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
                       {post.title}
                     </h3>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                    <span>{format(new Date(post.publishedAt), "MMM d, yyyy")}</span>
+                    <span>{post.views} views</span>
                   </div>
                 </CardContent>
               </Card>

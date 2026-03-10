@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { format } from "date-fns";
 import { MDXContent } from "@/components/MDXContent";
+import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
@@ -43,6 +44,11 @@ export default async function BlogPost({ params }: Props) {
   const post = await getBlogBySlug(slug);
 
   if (!post) notFound();
+
+  await prisma.blog.update({
+    where: { id: post.id },
+    data: { views: { increment: 1 } },
+  });
 
   const formatDate = (dateString: string) => {
     try {

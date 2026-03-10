@@ -29,6 +29,7 @@ model Blog {
   rawContent  String
   author      String   @default("Sai Vamshi")
   publishedAt DateTime
+  views       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
