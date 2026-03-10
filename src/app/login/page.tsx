@@ -6,13 +6,11 @@ import { Input } from "@/components/ui/input";
 import { login } from "./actions";
 
 interface Props {
-  searchParams?: Record<string, string | string[] | undefined> | Promise<Record<string, string | string[] | undefined>>;
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
-export default async function LoginPage({ searchParams }: Props) {
-  const params = (searchParams && typeof (searchParams as Promise<unknown>)?.then === "function")
-    ? await (searchParams as Promise<Record<string, string | string[] | undefined>>)
-    : (searchParams ?? {});
+export default function LoginPage({ searchParams }: Props) {
+  const params = searchParams ?? {};
   const error = params.error === "1";
   const missing = params.missing === "1";
   const nextPath = typeof params.next === "string" ? params.next : "/dashboard";

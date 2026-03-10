@@ -98,7 +98,7 @@ export default function ContactSection() {
           Want to hire me as a freelancer? Let's discuss.
         </h2>
         <p className="text-zinc-600 dark:text-zinc-400 mb-3 text-base">
-          Drop your message and let's discuss about your project.
+          Drop your email and I'll get back to you.
         </p>
 
         <div className="flex flex-col space-y-6">
@@ -119,7 +119,7 @@ export default function ContactSection() {
 
           <div className="max-w-md">
             <p className="text-zinc-600 dark:text-zinc-400 mb-3 text-base">
-              Drop in your email ID and I will get back to you.
+              Share your email and I will reach out.
             </p>
 
             {/* Success/Error Message */}
@@ -145,7 +145,7 @@ export default function ContactSection() {
                 <div className="flex-1">
                   <Input
                     type="email"
-                    placeholder="saivamshig404@gmail.com"
+                    placeholder="you@email.com"
                     className={`rounded-lg dark:bg-zinc-800 dark:text-white dark:border-zinc-700 ${
                       errors.email ? "border-red-500 dark:border-red-500" : ""
                     }`}
@@ -161,7 +161,7 @@ export default function ContactSection() {
                 <Button
                   type="submit"
                   variant="default"
-                  className="rounded-lg min-w-[80px]"
+                  className="rounded-lg min-w-[120px]"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
