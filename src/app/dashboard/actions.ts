@@ -249,3 +249,25 @@ export async function updateSnippet(data: z.infer<typeof updateSnippetSchema>) {
     return { success: false, error: message };
   }
 }
+
+export async function deleteBlog(id: string) {
+  await requireAuthForAction();
+  try {
+    await prisma.blog.delete({ where: { id } });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete blog post:", error);
+    return { success: false, error: "Failed to delete blog post" };
+  }
+}
+
+export async function deleteSnippet(id: string) {
+  await requireAuthForAction();
+  try {
+    await prisma.snippet.delete({ where: { id } });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete snippet:", error);
+    return { success: false, error: "Failed to delete snippet" };
+  }
+}

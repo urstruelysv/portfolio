@@ -4,6 +4,8 @@ import { useMemo, useState, useTransition } from "react";
 import {
   createBlogPost,
   createSnippet,
+  deleteBlog,
+  deleteSnippet,
   getBlog,
   getSnippet,
   updateBlogPost,
@@ -81,6 +83,8 @@ interface Props {
 
 export default function DashboardClient({ blogs, snippets }: Props) {
   const [isPending, startTransition] = useTransition();
+  const [blogItems, setBlogItems] = useState<BlogListItem[]>(blogs);
+  const [snippetItems, setSnippetItems] = useState<SnippetListItem[]>(snippets);
   const [activeForm, setActiveForm] = useState<"blog" | "snippet">("blog");
   const [blogMessage, setBlogMessage] = useState("");
   const [snippetMessage, setSnippetMessage] = useState("");
@@ -88,8 +92,8 @@ export default function DashboardClient({ blogs, snippets }: Props) {
   const [snippetForm, setSnippetForm] = useState<SnippetFormState>(emptySnippet);
 
   const sortedBlogs = useMemo(
-    () => [...blogs].sort((a, b) => (b.date || "").localeCompare(a.date || "")),
-    [blogs],
+    () => [...blogItems].sort((a, b) => (b.date || "").localeCompare(a.date || "")),
+    [blogItems],
   );
 
   function setBlogField<K extends keyof BlogFormState>(key: K, value: BlogFormState[K]) {
@@ -212,6 +216,32 @@ export default function DashboardClient({ blogs, snippets }: Props) {
     });
   }
 
+  function handleDeleteBlog(id: string) {
+    if (!window.confirm("Delete this blog post permanently?")) return;
+    startTransition(async () => {
+      const result = await deleteBlog(id);
+      if (!result.success) {
+        setBlogMessage("Error: " + (result.error ?? "Failed to delete blog post"));
+        return;
+      }
+      setBlogItems((prev) => prev.filter((item) => item.id !== id));
+      if (blogForm.id === id) resetBlogForm();
+    });
+  }
+
+  function handleDeleteSnippet(id: string) {
+    if (!window.confirm("Delete this snippet permanently?")) return;
+    startTransition(async () => {
+      const result = await deleteSnippet(id);
+      if (!result.success) {
+        setSnippetMessage("Error: " + (result.error ?? "Failed to delete snippet"));
+        return;
+      }
+      setSnippetItems((prev) => prev.filter((item) => item.id !== id));
+      if (snippetForm.id === id) resetSnippetForm();
+    });
+  }
+
   return (
     <>
       <Navigation />
@@ -258,6 +288,9 @@ export default function DashboardClient({ blogs, snippets }: Props) {
                       <div className="mt-2 flex gap-2">
                         <Button type="button" size="sm" variant="outline" onClick={() => handleEditBlog(post.id)}>
                           Edit
+                        </Button>
+                        <Button type="button" size="sm" variant="destructive" onClick={() => handleDeleteBlog(post.id)}>
+                          Delete
                         </Button>
                         <Button type="button" size="sm" variant="secondary" asChild>
                           <a href={`/blogs/${post.slug}`} target="_blank" rel="noreferrer">
@@ -329,13 +362,16 @@ export default function DashboardClient({ blogs, snippets }: Props) {
                   New Snippet
                 </Button>
                 <div className="space-y-2">
-                  {snippets.map((snippet) => (
+                  {snippetItems.map((snippet) => (
                     <div key={snippet.slug} className="border border-gray-200 dark:border-zinc-800/80 rounded-md p-3 bg-white/80 dark:bg-zinc-900/60">
                       <div className="text-sm font-medium">{snippet.title}</div>
                       <div className="text-xs text-muted-foreground">{snippet.slug}</div>
                       <div className="mt-2 flex gap-2">
                         <Button type="button" size="sm" variant="outline" onClick={() => handleEditSnippet(snippet.id)}>
                           Edit
+                        </Button>
+                        <Button type="button" size="sm" variant="destructive" onClick={() => handleDeleteSnippet(snippet.id)}>
+                          Delete
                         </Button>
                         <Button type="button" size="sm" variant="secondary" asChild>
                           <a href={`/snippets/${snippet.slug}`} target="_blank" rel="noreferrer">
