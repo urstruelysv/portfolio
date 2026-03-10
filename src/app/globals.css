@@ -69,3 +69,69 @@
       "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 }
+
+@layer base {
+  .blog-content > h1:first-child {
+    display: none;
+  }
+}
+
+@layer base {
+  .snippet-content .code-block {
+    position: relative;
+  }
+
+  .snippet-content .code-copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(17, 24, 39, 0.7);
+    color: #e5e7eb;
+    cursor: pointer;
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+
+  .snippet-content .code-copy-btn:hover {
+    background: rgba(17, 24, 39, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .snippet-content .code-copy-btn.copied {
+    background: #16a34a;
+    border-color: #16a34a;
+  }
+
+  .snippet-content .code-copy-btn svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .snippet-content .code-copy-btn::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 2.4rem;
+    right: 0;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+    border-radius: 0.35rem;
+    background: rgba(17, 24, 39, 0.9);
+    color: #e5e7eb;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms ease;
+  }
+
+  .snippet-content .code-copy-btn:hover::after,
+  .snippet-content .code-copy-btn.copied::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
