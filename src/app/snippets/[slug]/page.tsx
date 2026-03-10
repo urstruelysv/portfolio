@@ -47,8 +47,11 @@ export default async function SnippetPage({ params }: Props) {
         <Container>
           <div className="flex flex-col justify-center items-start max-w-3xl mx-auto mb-16">
             <div className="w-full">
-              <div className="prose prose-gray dark:prose-invert max-w-none">
-                <MDXContent code={snippet.content} />
+              <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4">
+                {snippet.title}
+              </h1>
+              <div className="prose prose-gray dark:prose-invert max-w-none snippet-content">
+                <MDXContent code={snippet.content} enableCopy />
               </div>
             </div>
           </div>

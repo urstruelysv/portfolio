@@ -72,7 +72,7 @@ export default async function BlogPost({ params }: Props) {
               <p>{formatDate(post.date)}</p>
             </div>
 
-            <div className="prose prose-gray dark:prose-invert max-w-none w-full mt-8">
+            <div className="prose prose-gray dark:prose-invert max-w-none w-full mt-8 blog-content">
               <MDXContent code={post.content} />
             </div>
           </article>
