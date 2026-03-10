@@ -30,3 +30,19 @@ export async function getSnippetBySlug(slug: string) {
     where: { slug },
   });
 }
+
+export async function getAllResources() {
+  const resourceClient = (prisma as unknown as { resource?: typeof prisma.resource }).resource;
+  if (!resourceClient) return [];
+  return resourceClient.findMany({
+    orderBy: [{ category: "asc" }, { sortOrder: "asc" }, { title: "asc" }],
+  });
+}
+
+export async function getResume() {
+  const resumeClient = (prisma as unknown as { resume?: typeof prisma.resume }).resume;
+  if (!resumeClient) return null;
+  return resumeClient.findFirst({
+    orderBy: { updatedAt: "desc" },
+  });
+}

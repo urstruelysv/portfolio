@@ -271,3 +271,124 @@ export async function deleteSnippet(id: string) {
     return { success: false, error: "Failed to delete snippet" };
   }
 }
+
+const resourceSchema = z.object({
+  title: z.string().min(1),
+  link: z.string().url(),
+  websiteLink: z.string().min(1),
+  description: z.string().min(1),
+  category: z.string().min(1),
+  sortOrder: z.number().int().min(0),
+});
+
+export async function listResources() {
+  await requireAuthForAction();
+  const resourceClient = (prisma as unknown as { resource?: typeof prisma.resource }).resource;
+  if (!resourceClient) {
+    console.warn("Prisma client missing Resource model. Run prisma generate.");
+    return [];
+  }
+  return resourceClient.findMany({
+    orderBy: [{ category: "asc" }, { sortOrder: "asc" }, { title: "asc" }],
+  });
+}
+
+export async function getResource(id: string) {
+  await requireAuthForAction();
+  const resourceClient = (prisma as unknown as { resource?: typeof prisma.resource }).resource;
+  if (!resourceClient) throw new Error("Resource model not available. Run prisma generate.");
+  const resource = await resourceClient.findUnique({ where: { id } });
+  if (!resource) throw new Error("Resource not found");
+  return resource;
+}
+
+export async function createResource(data: z.infer<typeof resourceSchema>) {
+  await requireAuthForAction();
+  const result = resourceSchema.safeParse(data);
+  if (!result.success) {
+    return { success: false, error: result.error.issues.map((i) => i.message).join(", ") };
+  }
+  try {
+    const resourceClient = (prisma as unknown as { resource?: typeof prisma.resource }).resource;
+    if (!resourceClient) return { success: false, error: "Resource model not available. Run prisma generate." };
+    await resourceClient.create({ data: result.data });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to create resource:", error);
+    return { success: false, error: "Failed to create resource" };
+  }
+}
+
+const updateResourceSchema = resourceSchema.extend({
+  id: z.string().min(1),
+});
+
+export async function updateResource(data: z.infer<typeof updateResourceSchema>) {
+  await requireAuthForAction();
+  const result = updateResourceSchema.safeParse(data);
+  if (!result.success) {
+    return { success: false, error: result.error.issues.map((i) => i.message).join(", ") };
+  }
+  const { id, ...rest } = result.data;
+  try {
+    const resourceClient = (prisma as unknown as { resource?: typeof prisma.resource }).resource;
+    if (!resourceClient) return { success: false, error: "Resource model not available. Run prisma generate." };
+    await resourceClient.update({ where: { id }, data: rest });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update resource:", error);
+    return { success: false, error: "Failed to update resource" };
+  }
+}
+
+export async function deleteResource(id: string) {
+  await requireAuthForAction();
+  try {
+    const resourceClient = (prisma as unknown as { resource?: typeof prisma.resource }).resource;
+    if (!resourceClient) return { success: false, error: "Resource model not available. Run prisma generate." };
+    await resourceClient.delete({ where: { id } });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete resource:", error);
+    return { success: false, error: "Failed to delete resource" };
+  }
+}
+
+const resumeSchema = z.object({
+  title: z.string().min(1),
+  subtitle: z.string().min(1),
+  summary: z.string().min(1),
+  fileUrl: z.string().min(1),
+  downloadName: z.string().min(1),
+});
+
+export async function getResumeAdmin() {
+  await requireAuthForAction();
+  const resumeClient = (prisma as unknown as { resume?: typeof prisma.resume }).resume;
+  if (!resumeClient) throw new Error("Resume model not available. Run prisma generate.");
+  const resume = await resumeClient.findFirst({ orderBy: { updatedAt: "desc" } });
+  if (!resume) throw new Error("Resume not found");
+  return resume;
+}
+
+export async function updateResume(data: z.infer<typeof resumeSchema>) {
+  await requireAuthForAction();
+  const result = resumeSchema.safeParse(data);
+  if (!result.success) {
+    return { success: false, error: result.error.issues.map((i) => i.message).join(", ") };
+  }
+  try {
+    const resumeClient = (prisma as unknown as { resume?: typeof prisma.resume }).resume;
+    if (!resumeClient) return { success: false, error: "Resume model not available. Run prisma generate." };
+    const existing = await resumeClient.findFirst();
+    if (!existing) {
+      await resumeClient.create({ data: result.data });
+    } else {
+      await resumeClient.update({ where: { id: existing.id }, data: result.data });
+    }
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update resume:", error);
+    return { success: false, error: "Failed to update resume" };
+  }
+}

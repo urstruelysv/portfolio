@@ -4,6 +4,8 @@ import { compile } from "@mdx-js/mdx";
 import rehypePrism from "rehype-prism-plus";
 import remarkGfm from "remark-gfm";
 import { prisma } from "../src/lib/prisma";
+import { resourceSeeds } from "../src/data/resources";
+import { resumeDefaults } from "../src/data/resume";
 
 const BLOGS_DIR = path.join(process.cwd(), "src/data/blogs");
 const SNIPPETS_DIR = path.join(process.cwd(), "src/data/snippets");
@@ -104,9 +106,35 @@ async function seedSnippets() {
   }
 }
 
+async function seedResources() {
+  for (const resource of resourceSeeds) {
+    await prisma.resource.upsert({
+      where: { link: resource.link },
+      create: resource,
+      update: {
+        title: resource.title,
+        websiteLink: resource.websiteLink,
+        description: resource.description,
+        category: resource.category,
+        sortOrder: resource.sortOrder,
+      },
+    });
+  }
+}
+
+async function seedResume() {
+  const existing = await prisma.resume.findFirst();
+  if (existing) return;
+  await prisma.resume.create({
+    data: resumeDefaults,
+  });
+}
+
 async function main() {
   await seedBlogs();
   await seedSnippets();
+  await seedResources();
+  await seedResume();
   await prisma.$disconnect();
 }
 

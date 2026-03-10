@@ -6,8 +6,14 @@ import {
   createSnippet,
   deleteBlog,
   deleteSnippet,
+  deleteResource,
   getBlog,
   getSnippet,
+  getResource,
+  listResources,
+  updateResume,
+  createResource,
+  updateResource,
   updateBlogPost,
   updateSnippet,
 } from "./actions";
@@ -36,6 +42,24 @@ type SnippetListItem = {
   logo: string;
 };
 
+type ResourceItem = {
+  id: string;
+  title: string;
+  link: string;
+  websiteLink: string;
+  description: string;
+  category: string;
+  sortOrder: number;
+};
+
+type ResumeState = {
+  title: string;
+  subtitle: string;
+  summary: string;
+  fileUrl: string;
+  downloadName: string;
+};
+
 type BlogFormState = {
   mode: "create" | "edit";
   id: string;
@@ -54,6 +78,17 @@ type SnippetFormState = {
   description: string;
   logo: string;
   content: string;
+};
+
+type ResourceFormState = {
+  mode: "create" | "edit";
+  id: string;
+  title: string;
+  link: string;
+  websiteLink: string;
+  description: string;
+  category: string;
+  sortOrder: number;
 };
 
 const emptyBlog = (): BlogFormState => ({
@@ -76,24 +111,52 @@ const emptySnippet = (): SnippetFormState => ({
   content: "",
 });
 
+const emptyResource = (): ResourceFormState => ({
+  mode: "create",
+  id: "",
+  title: "",
+  link: "",
+  websiteLink: "",
+  description: "",
+  category: "",
+  sortOrder: 0,
+});
+
 interface Props {
   blogs: BlogListItem[];
   snippets: SnippetListItem[];
+  resources: ResourceItem[];
+  resume: ResumeState;
 }
 
-export default function DashboardClient({ blogs, snippets }: Props) {
+export default function DashboardClient({ blogs, snippets, resources, resume }: Props) {
   const [isPending, startTransition] = useTransition();
   const [blogItems, setBlogItems] = useState<BlogListItem[]>(blogs);
   const [snippetItems, setSnippetItems] = useState<SnippetListItem[]>(snippets);
-  const [activeForm, setActiveForm] = useState<"blog" | "snippet">("blog");
+  const [resourceItems, setResourceItems] = useState<ResourceItem[]>(resources);
+  const [activeForm, setActiveForm] = useState<"blog" | "snippet" | "resources" | "cv">("blog");
   const [blogMessage, setBlogMessage] = useState("");
   const [snippetMessage, setSnippetMessage] = useState("");
+  const [resourceMessage, setResourceMessage] = useState("");
+  const [resumeMessage, setResumeMessage] = useState("");
   const [blogForm, setBlogForm] = useState<BlogFormState>(emptyBlog);
   const [snippetForm, setSnippetForm] = useState<SnippetFormState>(emptySnippet);
+  const [resourceForm, setResourceForm] = useState<ResourceFormState>(emptyResource);
+  const [resumeForm, setResumeForm] = useState<ResumeState>(resume);
 
   const sortedBlogs = useMemo(
     () => [...blogItems].sort((a, b) => (b.date || "").localeCompare(a.date || "")),
     [blogItems],
+  );
+
+  const sortedResources = useMemo(
+    () =>
+      [...resourceItems].sort((a, b) => {
+        if (a.category !== b.category) return a.category.localeCompare(b.category);
+        if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+        return a.title.localeCompare(b.title);
+      }),
+    [resourceItems],
   );
 
   function setBlogField<K extends keyof BlogFormState>(key: K, value: BlogFormState[K]) {
@@ -104,6 +167,14 @@ export default function DashboardClient({ blogs, snippets }: Props) {
     setSnippetForm((prev) => ({ ...prev, [key]: value }));
   }
 
+  function setResourceField<K extends keyof ResourceFormState>(key: K, value: ResourceFormState[K]) {
+    setResourceForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function setResumeField<K extends keyof ResumeState>(key: K, value: ResumeState[K]) {
+    setResumeForm((prev) => ({ ...prev, [key]: value }));
+  }
+
   function resetBlogForm() {
     setBlogMessage("");
     setBlogForm(emptyBlog());
@@ -112,6 +183,11 @@ export default function DashboardClient({ blogs, snippets }: Props) {
   function resetSnippetForm() {
     setSnippetMessage("");
     setSnippetForm(emptySnippet());
+  }
+
+  function resetResourceForm() {
+    setResourceMessage("");
+    setResourceForm(emptyResource());
   }
 
   function handleEditBlog(id: string) {
@@ -150,6 +226,27 @@ export default function DashboardClient({ blogs, snippets }: Props) {
         });
       } catch (error) {
         setSnippetMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
+  function handleEditResource(id: string) {
+    setResourceMessage("");
+    startTransition(async () => {
+      try {
+        const data = await getResource(id);
+        setResourceForm({
+          mode: "edit",
+          id: data.id,
+          title: data.title,
+          link: data.link,
+          websiteLink: data.websiteLink,
+          description: data.description,
+          category: data.category,
+          sortOrder: data.sortOrder,
+        });
+      } catch (error) {
+        setResourceMessage("Error: " + (error as Error).message);
       }
     });
   }
@@ -216,6 +313,75 @@ export default function DashboardClient({ blogs, snippets }: Props) {
     });
   }
 
+  async function handleResourceSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setResourceMessage("");
+    const payload = {
+      id: resourceForm.id,
+      title: resourceForm.title,
+      link: resourceForm.link,
+      websiteLink: resourceForm.websiteLink,
+      description: resourceForm.description,
+      category: resourceForm.category,
+      sortOrder: resourceForm.sortOrder,
+    };
+
+    startTransition(async () => {
+      try {
+        const result = resourceForm.mode === "edit"
+          ? await updateResource(payload)
+          : await createResource(payload);
+        if (!result.success) {
+          setResourceMessage("Error: " + (result.error ?? "Invalid resource data"));
+          return;
+        }
+        const refreshed = await listResources();
+        setResourceItems(refreshed.map((r) => ({
+          id: r.id,
+          title: r.title,
+          link: r.link,
+          websiteLink: r.websiteLink,
+          description: r.description,
+          category: r.category,
+          sortOrder: r.sortOrder,
+        })));
+        setResourceMessage(resourceForm.mode === "edit" ? "Resource updated." : "Resource created.");
+        if (resourceForm.mode === "edit") {
+          setResourceForm((prev) => ({ ...prev }));
+        } else {
+          setResourceForm(emptyResource());
+        }
+      } catch (error) {
+        setResourceMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
+  async function handleResumeSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setResumeMessage("");
+    const payload = {
+      title: resumeForm.title,
+      subtitle: resumeForm.subtitle,
+      summary: resumeForm.summary,
+      fileUrl: resumeForm.fileUrl,
+      downloadName: resumeForm.downloadName,
+    };
+
+    startTransition(async () => {
+      try {
+        const result = await updateResume(payload);
+        if (!result.success) {
+          setResumeMessage("Error: " + (result.error ?? "Invalid resume data"));
+          return;
+        }
+        setResumeMessage("Resume updated.");
+      } catch (error) {
+        setResumeMessage("Error: " + (error as Error).message);
+      }
+    });
+  }
+
   function handleDeleteBlog(id: string) {
     if (!window.confirm("Delete this blog post permanently?")) return;
     startTransition(async () => {
@@ -242,6 +408,19 @@ export default function DashboardClient({ blogs, snippets }: Props) {
     });
   }
 
+  function handleDeleteResource(id: string) {
+    if (!window.confirm("Delete this resource permanently?")) return;
+    startTransition(async () => {
+      const result = await deleteResource(id);
+      if (!result.success) {
+        setResourceMessage("Error: " + (result.error ?? "Failed to delete resource"));
+        return;
+      }
+      setResourceItems((prev) => prev.filter((item) => item.id !== id));
+      if (resourceForm.id === id) resetResourceForm();
+    });
+  }
+
   return (
     <>
       <Navigation />
@@ -264,13 +443,27 @@ export default function DashboardClient({ blogs, snippets }: Props) {
                 >
                   Snippets
                 </Button>
+                <Button
+                  type="button"
+                  variant={activeForm === "resources" ? "default" : "outline"}
+                  onClick={() => setActiveForm("resources")}
+                >
+                  Resources
+                </Button>
+                <Button
+                  type="button"
+                  variant={activeForm === "cv" ? "default" : "outline"}
+                  onClick={() => setActiveForm("cv")}
+                >
+                  CV
+                </Button>
               </div>
               <form action={logout}>
                 <Button type="submit" variant="outline">Logout</Button>
               </form>
             </div>
 
-            {activeForm === "blog" ? (
+            {activeForm === "blog" && (
               <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
                 <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
               <CardHeader>
@@ -351,7 +544,8 @@ export default function DashboardClient({ blogs, snippets }: Props) {
               </CardContent>
                 </Card>
               </div>
-            ) : (
+            )}
+            {activeForm === "snippet" && (
               <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
                 <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
               <CardHeader>
@@ -442,6 +636,173 @@ export default function DashboardClient({ blogs, snippets }: Props) {
                   )}
                 </form>
               </CardContent>
+                </Card>
+              </div>
+            )}
+            {activeForm === "resources" && (
+              <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+                  <CardHeader>
+                    <CardTitle>Resources</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <Button type="button" className="w-full" variant="outline" onClick={resetResourceForm}>
+                      New Resource
+                    </Button>
+                    <div className="space-y-2">
+                      {sortedResources.map((resource) => (
+                        <div key={resource.id} className="border border-gray-200 dark:border-zinc-800/80 rounded-md p-3 bg-white/80 dark:bg-zinc-900/60">
+                          <div className="text-sm font-medium">{resource.title}</div>
+                          <div className="text-xs text-muted-foreground">{resource.category}</div>
+                          <div className="mt-2 flex gap-2">
+                            <Button type="button" size="sm" variant="outline" onClick={() => handleEditResource(resource.id)}>
+                              Edit
+                            </Button>
+                            <Button type="button" size="sm" variant="destructive" onClick={() => handleDeleteResource(resource.id)}>
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+                  <CardHeader>
+                    <CardTitle>{resourceForm.mode === "edit" ? "Edit Resource" : "Create Resource"}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleResourceSubmit} className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Title</label>
+                        <Input
+                          value={resourceForm.title}
+                          onChange={(e) => setResourceField("title", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Link</label>
+                        <Input
+                          value={resourceForm.link}
+                          onChange={(e) => setResourceField("link", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Website Label</label>
+                        <Input
+                          value={resourceForm.websiteLink}
+                          onChange={(e) => setResourceField("websiteLink", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Description</label>
+                        <Textarea
+                          value={resourceForm.description}
+                          onChange={(e) => setResourceField("description", e.target.value)}
+                          rows={3}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Category</label>
+                        <Input
+                          value={resourceForm.category}
+                          onChange={(e) => setResourceField("category", e.target.value)}
+                          list="resource-categories"
+                          required
+                        />
+                        <datalist id="resource-categories">
+                          {Array.from(new Set(resourceItems.map((r) => r.category))).map((cat) => (
+                            <option key={cat} value={cat} />
+                          ))}
+                        </datalist>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Sort Order</label>
+                        <Input
+                          type="number"
+                          value={resourceForm.sortOrder}
+                          onChange={(e) => setResourceField("sortOrder", Number(e.target.value))}
+                          min={0}
+                          required
+                        />
+                      </div>
+                      <Button type="submit" disabled={isPending}>
+                        {isPending ? "Saving..." : resourceForm.mode === "edit" ? "Update Resource" : "Create Resource"}
+                      </Button>
+                      {resourceMessage && (
+                        <p className={`mt-4 text-sm ${resourceMessage.includes("Error") ? "text-red-500" : "text-green-500"}`}>
+                          {resourceMessage}
+                        </p>
+                      )}
+                    </form>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+            {activeForm === "cv" && (
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr] gap-6">
+                <Card className="bg-white/90 dark:bg-zinc-900/70 border-gray-200 dark:border-zinc-800/80">
+                  <CardHeader>
+                    <CardTitle>Edit Resume</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleResumeSubmit} className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Title</label>
+                        <Input
+                          value={resumeForm.title}
+                          onChange={(e) => setResumeField("title", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Subtitle</label>
+                        <Input
+                          value={resumeForm.subtitle}
+                          onChange={(e) => setResumeField("subtitle", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Summary</label>
+                        <Textarea
+                          value={resumeForm.summary}
+                          onChange={(e) => setResumeField("summary", e.target.value)}
+                          rows={4}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">File URL</label>
+                        <Input
+                          value={resumeForm.fileUrl}
+                          onChange={(e) => setResumeField("fileUrl", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Download Name</label>
+                        <Input
+                          value={resumeForm.downloadName}
+                          onChange={(e) => setResumeField("downloadName", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <Button type="submit" disabled={isPending}>
+                        {isPending ? "Saving..." : "Update Resume"}
+                      </Button>
+                      {resumeMessage && (
+                        <p className={`mt-4 text-sm ${resumeMessage.includes("Error") ? "text-red-500" : "text-green-500"}`}>
+                          {resumeMessage}
+                        </p>
+                      )}
+                    </form>
+                  </CardContent>
                 </Card>
               </div>
             )}

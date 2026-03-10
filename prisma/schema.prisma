@@ -48,3 +48,30 @@ model Snippet {
 
   @@map("snippets")
 }
+
+model Resource {
+  id          String   @id @default(uuid())
+  title       String
+  link        String   @unique
+  websiteLink String
+  description String
+  category    String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("resources")
+}
+
+model Resume {
+  id           String   @id @default(uuid())
+  title        String
+  subtitle     String
+  summary      String
+  fileUrl      String
+  downloadName String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("resume")
+}
