@@ -12,23 +12,24 @@ function hashPassword(password: string) {
   return crypto.createHash("sha256").update(password).digest("hex");
 }
 
-export function isAuthenticated() {
+export async function isAuthenticated() {
   const password = getPassword();
   if (!password) return false;
-  const token = cookies().get(COOKIE_NAME)?.value;
+  const store = await cookies();
+  const token = store.get(COOKIE_NAME)?.value;
   if (!token) return false;
   return token === hashPassword(password);
 }
 
-export function requireAuthForPage(nextPath = "/dashboard") {
-  if (!isAuthenticated()) {
+export async function requireAuthForPage(nextPath = "/dashboard") {
+  if (!(await isAuthenticated())) {
     const params = new URLSearchParams({ next: nextPath });
     redirect(`/login?${params.toString()}`);
   }
 }
 
-export function requireAuthForAction() {
-  if (!isAuthenticated()) {
+export async function requireAuthForAction() {
+  if (!(await isAuthenticated())) {
     throw new Error("Unauthorized");
   }
 }
@@ -45,11 +46,12 @@ export function validatePassword(input: string) {
   }
 }
 
-export function setAuthCookie() {
+export async function setAuthCookie() {
   const password = getPassword();
   if (!password) return false;
   const token = hashPassword(password);
-  cookies().set(COOKIE_NAME, token, {
+  const store = await cookies();
+  store.set(COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -58,8 +60,9 @@ export function setAuthCookie() {
   return true;
 }
 
-export function clearAuthCookie() {
-  cookies().set(COOKIE_NAME, "", {
+export async function clearAuthCookie() {
+  const store = await cookies();
+  store.set(COOKIE_NAME, "", {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { sendContactEmail } from "@/lib/email";
 
 const contactSchema = z.object({
   email: z
@@ -39,6 +40,12 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      try {
+        await sendContactEmail({ email, isUpdate: true });
+      } catch (mailError) {
+        console.error("Failed to send contact email:", mailError);
+      }
+
       return NextResponse.json({
         success: true,
         message: "Thank you! I will reach out to you soon.",
@@ -55,6 +62,12 @@ export async function POST(request: NextRequest) {
         email,
       },
     });
+
+    try {
+      await sendContactEmail({ email, isUpdate: false });
+    } catch (mailError) {
+      console.error("Failed to send contact email:", mailError);
+    }
 
     return NextResponse.json({
       success: true,
