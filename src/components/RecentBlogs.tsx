@@ -1,14 +1,9 @@
-"use client";
-
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { blogs } from "#site/content";
+import { getRecentBlogs } from "@/lib/content";
 
-export default function RecentBlogs() {
-  // Get the most recent 2 blogs
-  const recentPosts = blogs
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 2);
+export default async function RecentBlogs() {
+  const recentPosts = await getRecentBlogs(2);
 
   return (
     <section className="max-w-3xl mx-auto px-6 py-8 ">
@@ -18,8 +13,8 @@ export default function RecentBlogs() {
         </h2>
 
         <div className="flex flex-col gap-4">
-          {recentPosts.map((post, index) => (
-            <Link key={index} href={`/blogs/${post.slug}`}>
+          {recentPosts.map((post) => (
+            <Link key={post.id} href={`/blogs/${post.slug}`}>
               <Card className="border border-gray-200 dark:border-zinc-800 hover:shadow-md dark:hover:shadow-zinc-900/50 transition-all duration-300 bg-white dark:bg-zinc-900">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start gap-4">

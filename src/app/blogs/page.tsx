@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import BlogCard from "@/components/BlogCard";
-import { blogs } from "#site/content";
+import { getAllBlogs } from "@/lib/content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,8 +11,10 @@ export const metadata: Metadata = {
     "Thoughts, stories, and ideas about software development and technology.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function BlogPage() {
-  const posts = blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const posts = await getAllBlogs();
 
   return (
     <>
@@ -34,7 +36,7 @@ export default async function BlogPage() {
                   title={post.title}
                   slug={post.slug}
                   description={post.description}
-                  date={post.date}
+                  date={post.publishedAt.toISOString()}
                   author={post.author}
                 />
               ))}

@@ -1,11 +1,13 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
-import { blogs } from "#site/content";
+import { getBlogBySlug } from "@/lib/content";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { format } from "date-fns";
 import { MDXContent } from "@/components/MDXContent";
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 interface Props {
   params: Promise<{
@@ -15,7 +17,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogs.find((b) => b.slug === slug);
+  const post = await getBlogBySlug(slug);
 
   if (!post) {
     return {
@@ -31,20 +33,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.description,
       type: "article",
-      publishedTime: post.date,
+      publishedTime: post.publishedAt.toISOString(),
     },
   };
 }
 
-export function generateStaticParams() {
-  return blogs.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params;
-  const post = blogs.find((b) => b.slug === slug);
+  const post = await getBlogBySlug(slug);
 
   if (!post) notFound();
 
@@ -69,7 +65,7 @@ export default async function BlogPost({ params }: Props) {
             <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
               <p>{post.author}</p>
               <span className="mx-2 text-gray-500">•</span>
-              <p>{formatDate(post.date)}</p>
+              <p>{formatDate(post.publishedAt.toISOString())}</p>
             </div>
 
             <div className="prose prose-gray dark:prose-invert max-w-none w-full mt-8 blog-content">

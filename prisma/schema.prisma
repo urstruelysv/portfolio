@@ -19,3 +19,32 @@ model Contact {
 
   @@map("contacts")
 }
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  content     String
+  rawContent  String
+  author      String   @default("Sai Vamshi")
+  publishedAt DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("blogs")
+}
+
+model Snippet {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  logo        String?
+  content     String
+  rawContent  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("snippets")
+}

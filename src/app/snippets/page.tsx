@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import FunctionCard from "@/components/FunctionCard";
-import { snippets } from "#site/content";
+import { getAllSnippets } from "@/lib/content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +11,10 @@ export const metadata: Metadata = {
     "Reusable code snippets that contain API integrations, custom CSS or something I find cool.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function SnippetsPage() {
+  const snippets = await getAllSnippets();
   return (
     <>
       <Navigation />
@@ -36,7 +39,7 @@ export default async function SnippetsPage() {
                   key={snippet.slug}
                   title={snippet.title}
                   slug={snippet.slug}
-                  logo={snippet.logo}
+                  logo={snippet.logo ?? undefined}
                   description={snippet.description}
                 />
               ))}

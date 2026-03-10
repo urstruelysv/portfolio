@@ -18,6 +18,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 type BlogListItem = {
+  id: string;
   slug: string;
   title: string;
   description: string;
@@ -26,6 +27,7 @@ type BlogListItem = {
 };
 
 type SnippetListItem = {
+  id: string;
   slug: string;
   title: string;
   description: string;
@@ -34,7 +36,7 @@ type SnippetListItem = {
 
 type BlogFormState = {
   mode: "create" | "edit";
-  originalSlug: string;
+  id: string;
   title: string;
   slug: string;
   description: string;
@@ -44,7 +46,7 @@ type BlogFormState = {
 
 type SnippetFormState = {
   mode: "create" | "edit";
-  originalSlug: string;
+  id: string;
   title: string;
   slug: string;
   description: string;
@@ -54,7 +56,7 @@ type SnippetFormState = {
 
 const emptyBlog = (): BlogFormState => ({
   mode: "create",
-  originalSlug: "",
+  id: "",
   title: "",
   slug: "",
   description: "",
@@ -64,7 +66,7 @@ const emptyBlog = (): BlogFormState => ({
 
 const emptySnippet = (): SnippetFormState => ({
   mode: "create",
-  originalSlug: "",
+  id: "",
   title: "",
   slug: "",
   description: "",
@@ -108,14 +110,14 @@ export default function DashboardClient({ blogs, snippets }: Props) {
     setSnippetForm(emptySnippet());
   }
 
-  function handleEditBlog(slug: string) {
+  function handleEditBlog(id: string) {
     setBlogMessage("");
     startTransition(async () => {
       try {
-        const data = await getBlog(slug);
+        const data = await getBlog(id);
         setBlogForm({
           mode: "edit",
-          originalSlug: data.slug,
+          id: data.id,
           title: data.title,
           slug: data.slug,
           description: data.description,
@@ -128,14 +130,14 @@ export default function DashboardClient({ blogs, snippets }: Props) {
     });
   }
 
-  function handleEditSnippet(slug: string) {
+  function handleEditSnippet(id: string) {
     setSnippetMessage("");
     startTransition(async () => {
       try {
-        const data = await getSnippet(slug);
+        const data = await getSnippet(id);
         setSnippetForm({
           mode: "edit",
-          originalSlug: data.slug,
+          id: data.id,
           title: data.title,
           slug: data.slug,
           description: data.description,
@@ -157,7 +159,7 @@ export default function DashboardClient({ blogs, snippets }: Props) {
       description: blogForm.description,
       date: blogForm.date,
       content: blogForm.content,
-      originalSlug: blogForm.originalSlug,
+      id: blogForm.id,
     };
 
     startTransition(async () => {
@@ -171,7 +173,7 @@ export default function DashboardClient({ blogs, snippets }: Props) {
         }
         setBlogMessage(blogForm.mode === "edit" ? "Blog post updated." : "Blog post created.");
         if (blogForm.mode === "edit") {
-          setBlogForm((prev) => ({ ...prev, originalSlug: prev.slug }));
+          setBlogForm((prev) => ({ ...prev }));
         }
       } catch (error) {
         setBlogMessage("Error: " + (error as Error).message);
@@ -188,7 +190,7 @@ export default function DashboardClient({ blogs, snippets }: Props) {
       description: snippetForm.description,
       logo: snippetForm.logo || undefined,
       content: snippetForm.content,
-      originalSlug: snippetForm.originalSlug,
+      id: snippetForm.id,
     };
 
     startTransition(async () => {
@@ -202,7 +204,7 @@ export default function DashboardClient({ blogs, snippets }: Props) {
         }
         setSnippetMessage(snippetForm.mode === "edit" ? "Snippet updated." : "Snippet created.");
         if (snippetForm.mode === "edit") {
-          setSnippetForm((prev) => ({ ...prev, originalSlug: prev.slug }));
+          setSnippetForm((prev) => ({ ...prev }));
         }
       } catch (error) {
         setSnippetMessage("Error: " + (error as Error).message);
@@ -254,7 +256,7 @@ export default function DashboardClient({ blogs, snippets }: Props) {
                       <div className="text-sm font-medium">{post.title}</div>
                       <div className="text-xs text-muted-foreground">{post.date}</div>
                       <div className="mt-2 flex gap-2">
-                        <Button type="button" size="sm" variant="outline" onClick={() => handleEditBlog(post.slug)}>
+                        <Button type="button" size="sm" variant="outline" onClick={() => handleEditBlog(post.id)}>
                           Edit
                         </Button>
                         <Button type="button" size="sm" variant="secondary" asChild>
@@ -332,7 +334,7 @@ export default function DashboardClient({ blogs, snippets }: Props) {
                       <div className="text-sm font-medium">{snippet.title}</div>
                       <div className="text-xs text-muted-foreground">{snippet.slug}</div>
                       <div className="mt-2 flex gap-2">
-                        <Button type="button" size="sm" variant="outline" onClick={() => handleEditSnippet(snippet.slug)}>
+                        <Button type="button" size="sm" variant="outline" onClick={() => handleEditSnippet(snippet.id)}>
                           Edit
                         </Button>
                         <Button type="button" size="sm" variant="secondary" asChild>
