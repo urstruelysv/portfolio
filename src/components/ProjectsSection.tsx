@@ -50,6 +50,14 @@ const projects = [
     technologies: ["FullStack", "Next.js", "React", "TailwindCSS", "API"],
     icon: "🧠",
   },
+  {
+    title: "AutoCommit CLI",
+    description:
+      "AI-powered CLI that generates and commits concise git messages from staged changes using Gemini.",
+    href: "https://autocommitcli.aethoscompany.in/",
+    technologies: ["Python", "CLI", "Git", "Gemini API"],
+    icon: "✨",
+  },
 ];
 
 export default function ProjectsSection() {

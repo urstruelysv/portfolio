@@ -108,6 +108,8 @@ export default function ProjectsPage() {
             <Link
               href="https://github.com/urstruelysv"
               className="inline-flex items-center gap-2 px-4 py-2 text-base text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 font-medium transition-colors bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>See all projects at</span>
               <svg

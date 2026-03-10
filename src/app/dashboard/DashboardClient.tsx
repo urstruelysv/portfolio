@@ -486,7 +486,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
                           Delete
                         </Button>
                         <Button type="button" size="sm" variant="secondary" asChild>
-                          <a href={`/blogs/${post.slug}`} target="_blank" rel="noreferrer">
+                          <a href={`/blogs/${post.slug}`}>
                             View
                           </a>
                         </Button>
@@ -568,7 +568,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
                           Delete
                         </Button>
                         <Button type="button" size="sm" variant="secondary" asChild>
-                          <a href={`/snippets/${snippet.slug}`} target="_blank" rel="noreferrer">
+                          <a href={`/snippets/${snippet.slug}`}>
                             View
                           </a>
                         </Button>

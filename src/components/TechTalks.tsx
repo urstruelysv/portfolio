@@ -42,7 +42,13 @@ export default function TechTalks() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {techTalks.map((talk, index) => (
-          <Link key={index} href={talk.href} className="block">
+          <Link
+            key={index}
+            href={talk.href}
+            className="block"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <div className="rounded-xl border bg-white shadow hover:shadow-lg transition-shadow duration-200 cursor-pointer">
               <div
                 className="aspect-video relative mb-4 bg-gray-100 rounded-t-lg"
@@ -69,6 +75,8 @@ export default function TechTalks() {
       <Link
         href="https://www.youtube.com/channel/UC7MQDjVfjEPkHMe1lZGkDRA"
         className="text-blue-600 hover:underline font-medium"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         See All Videos
       </Link>

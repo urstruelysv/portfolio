@@ -157,8 +157,6 @@ export default function HeroSection() {
             <a
               href="/cv"
               className="font-bold font-inter relative inline-flex overflow-hidden text-xs md:text-sm text-zinc-600/0.1 dark:text-zinc-600 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               <span className="relative">CV</span>
             </a>
