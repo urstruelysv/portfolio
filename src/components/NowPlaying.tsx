@@ -15,6 +15,10 @@ export default function NowPlaying() {
   const [data, setData] = useState<SpotifyData | null>(null);
 
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      setData({ isPlaying: false });
+      return;
+    }
     const fetchNowPlaying = async () => {
       try {
         const response = await fetch("/api/now-playing");
