@@ -32,7 +32,20 @@ export async function GET() {
   }
 
   try {
-    const response: any = await getNowPlaying();
+    const response = await getNowPlaying();
+
+    if (!(response instanceof Response)) {
+      const errorUntil = now + ERROR_BACKOFF_MS;
+      globalForSpotify.__spotifyCache = {
+        data: null,
+        payload: { isPlaying: false },
+        status: response.status,
+        cachedAt: now,
+        errorUntil,
+        lastError: `status_${response.status}`,
+      };
+      return NextResponse.json({ isPlaying: false }, { status: response.status });
+    }
 
     if (response.status === 204 || response.status > 400) {
       const errorUntil = now + ERROR_BACKOFF_MS;

@@ -43,14 +43,14 @@ export default function LifeChangelog() {
         </h2>
 
         <div className="space-y-8">
-          {changelogData.map((yearData, yearIndex) => (
-            <div key={yearIndex}>
+          {changelogData.map((yearData) => (
+            <div key={yearData.year}>
               <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
                 {yearData.year}
               </h3>
               <div className="space-y-4">
-                {yearData.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex gap-4">
+                {yearData.items.map((item) => (
+                  <div key={`${item.title}-${item.year ?? ""}`} className="flex gap-4">
                     <div className="shrink-0 mt-1 flex items-center justify-center w-5 h-5 border border-blue-600 dark:border-blue-500 rounded-full">
                       <span className="text-blue-600 dark:text-blue-500 text-xs">
                         &#x2714;

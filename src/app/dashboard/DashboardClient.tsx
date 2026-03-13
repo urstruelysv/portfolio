@@ -205,7 +205,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           content: data.content,
         });
       } catch (error) {
-        setBlogMessage("Error: " + (error as Error).message);
+        setBlogMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -225,7 +225,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           content: data.content,
         });
       } catch (error) {
-        setSnippetMessage("Error: " + (error as Error).message);
+        setSnippetMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -246,7 +246,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           sortOrder: data.sortOrder,
         });
       } catch (error) {
-        setResourceMessage("Error: " + (error as Error).message);
+        setResourceMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -269,7 +269,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           ? await updateBlogPost(payload)
           : await createBlogPost(payload);
         if (!result.success) {
-          setBlogMessage("Error: " + (result.error ?? "Invalid blog data"));
+          setBlogMessage(`Error: ${result.error ?? "Invalid blog data"}`);
           return;
         }
         setBlogMessage(blogForm.mode === "edit" ? "Blog post updated." : "Blog post created.");
@@ -277,7 +277,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           setBlogForm((prev) => ({ ...prev }));
         }
       } catch (error) {
-        setBlogMessage("Error: " + (error as Error).message);
+        setBlogMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -300,7 +300,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           ? await updateSnippet(payload)
           : await createSnippet(payload);
         if (!result.success) {
-          setSnippetMessage("Error: " + (result.error ?? "Invalid snippet data"));
+          setSnippetMessage(`Error: ${result.error ?? "Invalid snippet data"}`);
           return;
         }
         setSnippetMessage(snippetForm.mode === "edit" ? "Snippet updated." : "Snippet created.");
@@ -308,7 +308,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           setSnippetForm((prev) => ({ ...prev }));
         }
       } catch (error) {
-        setSnippetMessage("Error: " + (error as Error).message);
+        setSnippetMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -332,7 +332,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           ? await updateResource(payload)
           : await createResource(payload);
         if (!result.success) {
-          setResourceMessage("Error: " + (result.error ?? "Invalid resource data"));
+          setResourceMessage(`Error: ${result.error ?? "Invalid resource data"}`);
           return;
         }
         const refreshed = await listResources();
@@ -352,7 +352,7 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
           setResourceForm(emptyResource());
         }
       } catch (error) {
-        setResourceMessage("Error: " + (error as Error).message);
+        setResourceMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -372,12 +372,12 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
       try {
         const result = await updateResume(payload);
         if (!result.success) {
-          setResumeMessage("Error: " + (result.error ?? "Invalid resume data"));
+          setResumeMessage(`Error: ${result.error ?? "Invalid resume data"}`);
           return;
         }
         setResumeMessage("Resume updated.");
       } catch (error) {
-        setResumeMessage("Error: " + (error as Error).message);
+        setResumeMessage(`Error: ${(error as Error).message}`);
       }
     });
   }
@@ -385,11 +385,11 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
   function handleDeleteBlog(id: string) {
     if (!window.confirm("Delete this blog post permanently?")) return;
     startTransition(async () => {
-      const result = await deleteBlog(id);
-      if (!result.success) {
-        setBlogMessage("Error: " + (result.error ?? "Failed to delete blog post"));
-        return;
-      }
+    const result = await deleteBlog(id);
+    if (!result.success) {
+      setBlogMessage(`Error: ${result.error ?? "Failed to delete blog post"}`);
+      return;
+    }
       setBlogItems((prev) => prev.filter((item) => item.id !== id));
       if (blogForm.id === id) resetBlogForm();
     });
@@ -398,11 +398,11 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
   function handleDeleteSnippet(id: string) {
     if (!window.confirm("Delete this snippet permanently?")) return;
     startTransition(async () => {
-      const result = await deleteSnippet(id);
-      if (!result.success) {
-        setSnippetMessage("Error: " + (result.error ?? "Failed to delete snippet"));
-        return;
-      }
+    const result = await deleteSnippet(id);
+    if (!result.success) {
+      setSnippetMessage(`Error: ${result.error ?? "Failed to delete snippet"}`);
+      return;
+    }
       setSnippetItems((prev) => prev.filter((item) => item.id !== id));
       if (snippetForm.id === id) resetSnippetForm();
     });
@@ -411,11 +411,11 @@ export default function DashboardClient({ blogs, snippets, resources, resume }: 
   function handleDeleteResource(id: string) {
     if (!window.confirm("Delete this resource permanently?")) return;
     startTransition(async () => {
-      const result = await deleteResource(id);
-      if (!result.success) {
-        setResourceMessage("Error: " + (result.error ?? "Failed to delete resource"));
-        return;
-      }
+    const result = await deleteResource(id);
+    if (!result.success) {
+      setResourceMessage(`Error: ${result.error ?? "Failed to delete resource"}`);
+      return;
+    }
       setResourceItems((prev) => prev.filter((item) => item.id !== id));
       if (resourceForm.id === id) resetResourceForm();
     });

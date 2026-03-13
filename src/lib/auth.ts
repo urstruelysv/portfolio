@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { redirect } from "next/navigation";
 
 const COOKIE_NAME = "dashboard_auth";

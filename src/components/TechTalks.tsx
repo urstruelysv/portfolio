@@ -41,9 +41,9 @@ export default function TechTalks() {
       <h2 className="text-2xl font-bold mb-6">Tech Talks and Videos</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        {techTalks.map((talk, index) => (
+        {techTalks.map((talk) => (
           <Link
-            key={index}
+            key={talk.href}
             href={talk.href}
             className="block"
             target="_blank"

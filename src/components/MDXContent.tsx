@@ -19,10 +19,10 @@ export function MDXContent({ code, enableCopy = false }: Props) {
   }, [code]);
 
   useEffect(() => {
-    if (!enableCopy || !contentRef.current) return;
+    if (!enableCopy || !contentRef.current || !Content) return;
     const container = contentRef.current;
     const pres = Array.from(container.querySelectorAll("pre"));
-    pres.forEach((pre) => {
+    for (const pre of pres) {
       if (pre.querySelector(".code-copy-btn")) return;
       pre.classList.add("code-block");
       const button = document.createElement("button");
@@ -52,8 +52,8 @@ export function MDXContent({ code, enableCopy = false }: Props) {
         }
       };
       pre.appendChild(button);
-    });
-  }, [enableCopy, Content, code]);
+    }
+  }, [enableCopy, Content]);
 
   if (!Content) return null;
   return (

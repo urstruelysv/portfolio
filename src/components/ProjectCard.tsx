@@ -117,8 +117,8 @@ export default function ProjectCard({
             </p>
           </div>
           <div className="flex flex-wrap gap-2 mt-auto">
-            {technologies.map((tech, index) => (
-              <TechBadge key={index}>{tech}</TechBadge>
+            {technologies.map((tech) => (
+              <TechBadge key={tech}>{tech}</TechBadge>
             ))}
           </div>
         </div>

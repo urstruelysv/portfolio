@@ -2,7 +2,7 @@ import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Container from "../../components/Container";
 import ResourcesCard from "../../components/ResourcesCard";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { getAllResources } from "@/lib/content";
 import { resourceSeeds } from "@/data/resources";
 

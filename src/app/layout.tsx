@@ -25,6 +25,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed to set theme before hydration to avoid flash.
           dangerouslySetInnerHTML={{
             __html: `(() => {
   try {

@@ -69,8 +69,8 @@ export default function ProjectsSection() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <div key={index}>
+          {projects.map((project) => (
+            <div key={project.title}>
               <ProjectCard {...project} />
             </div>
           ))}

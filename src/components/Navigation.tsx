@@ -25,6 +25,7 @@ export default function Navigation() {
     }
   }, [isMenuOpen]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Close menu on route change.
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);

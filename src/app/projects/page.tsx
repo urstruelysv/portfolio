@@ -90,8 +90,8 @@ export default function ProjectsPage() {
 
           <section className="py-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {projects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
+              {projects.map((project) => (
+                <ProjectCard key={project.title} {...project} />
               ))}
             </div>
           </section>

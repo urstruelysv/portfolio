@@ -26,10 +26,10 @@ export default function Footer() {
     <footer className="max-w-3xl mx-auto px-6 py-8 border-t border-zinc-200 dark:border-zinc-800">
       {/* Grid of footer links */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {footerLinks.map((link, index) => {
+        {footerLinks.map((link) => {
           const isExternal = link.href.startsWith("http");
           return (
-          <div key={index}>
+          <div key={link.href}>
             <Link
               href={link.href}
               className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
@@ -42,7 +42,7 @@ export default function Footer() {
         )})}
       </div>
 
-      {/* Bottom footer: social + credits */}
+    
     </footer>
   );
 }
