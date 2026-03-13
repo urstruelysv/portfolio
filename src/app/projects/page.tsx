@@ -2,7 +2,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
 import Link from "next/link";
-import UpcomingProjects from "@/components/UpcomingProjects";
 import ContactSection from "@/components/ContactSection";
 import Container from "@/components/Container";
 
@@ -14,14 +13,6 @@ const projects = [
     href: "https://autocommitcli.aethoscompany.in/",
     technologies: ["Python", "CLI", "Git", "Gemini API", "OpenAI API", "Groq"],
     icon: "💻",
-  },
-  {
-    title: "Aethos vision Labs",
-    description:
-      "helping businesses and brands turn views into cash with AI solutions and video content.",
-    href: "https://www.aethoscompany.in",
-    technologies: ["Front-end", "Next.js", "React", "TailwindCSS"],
-    icon: "🌙",
   },
   {
     title: "cirro",
@@ -60,6 +51,14 @@ const projects = [
     href: "https://downloadanything.vercel.app",
     technologies: ["FullStack", "Next.js", "React", "TailwindCSS", "API"],
     icon: "🧠",
+  },
+  {
+    title: "Aethos vision Labs",
+    description:
+      "helping businesses and brands turn views into cash with AI solutions and video content.",
+    href: "https://www.aethoscompany.in",
+    technologies: ["Front-end", "Next.js", "React", "TailwindCSS"],
+    icon: "🌙",
   },
 ];
 
@@ -118,7 +117,6 @@ export default function ProjectsPage() {
               </svg>
             </Link>
           </div>
-          <UpcomingProjects />
           <ContactSection />
         </Container>
       </main>

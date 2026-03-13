@@ -13,28 +13,6 @@ const projects = [
     icon: "✨",
   },
   {
-    title: "Aethos vision Labs",
-    description:
-      "helping businesses and brands turn views into cash with AI solutions and video content.",
-    href: "https://www.aethoscompany.in",
-    technologies: ["Front-end", "Next.js", "React", "TailwindCSS"],
-    icon: "🌙",
-  },
-  {
-    title: "cirro",
-    description:
-      "E-commerce website for a packaged drinking water brand cirro - purest of all",
-    href: "https://cirrowtr.in",
-    technologies: [
-      "Next.js",
-      "React",
-      "TailwindCSS",
-      "Full-Stack",
-      "Framer-motion",
-    ],
-    icon: "⚡",
-  },
-  {
     title: "EchoBoard",
     description:
       "A drop-in, privacy-respecting comment & feedback widget for any static or dynamic site.",
@@ -57,6 +35,28 @@ const projects = [
     href: "https://downloadanything.vercel.app",
     technologies: ["FullStack", "Next.js", "React", "TailwindCSS", "API"],
     icon: "🧠",
+  },
+  {
+    title: "cirro",
+    description:
+      "E-commerce website for a packaged drinking water brand cirro - purest of all",
+    href: "https://cirrowtr.in",
+    technologies: [
+      "Next.js",
+      "React",
+      "TailwindCSS",
+      "Full-Stack",
+      "Framer-motion",
+    ],
+    icon: "⚡",
+  },
+  {
+    title: "Aethos vision Labs",
+    description:
+      "helping businesses and brands turn views into cash with AI solutions and video content.",
+    href: "https://www.aethoscompany.in",
+    technologies: ["Front-end", "Next.js", "React", "TailwindCSS"],
+    icon: "🌙",
   },
 ];
 
