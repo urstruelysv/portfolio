@@ -55,7 +55,7 @@ export default function HeroSection() {
             >
               Aethos Labs
             </a>
-            <a href="">,</a>
+            <span>,</span>
             <a
               className="inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1 text-sm md:text-base rounded"
               href="https://cirrowtr.in"
@@ -82,7 +82,7 @@ export default function HeroSection() {
                     exit="exit"
                     className="z-20 p-4 rounded-xl bg-white dark:bg-zinc-800 shadow-2xl inset-x-0 w-full  absolute  min-h-60 text-sm md:text-sm"
                   >
-                    <div className="bg-grid-slate-50 dark:bg-grid-zinc-700/30 absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]"></div>
+                    <div className="bg-grid-slate-50 dark:bg-grid-zinc-700/30 absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]" />
                     <motion.p variants={itemA} className="font-normal py-3">
                       Founder{" "}
                       <a
@@ -140,7 +140,7 @@ export default function HeroSection() {
                       </a>
                     </motion.p>
                     <div className="absolute inset-x-0 -bottom-px h-px bg-slate-900/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]">
-                      <div className="w-full flex-none blur-[1px] h-px [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                      <div className="w-full flex-none blur-[1px] h-px [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]" />
                     </div>
                   </motion.div>
                 )}
@@ -148,9 +148,8 @@ export default function HeroSection() {
             </span>
           </div>
           <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-medium">
-            Full-stack developer crafting tasteful frontends, robust backends,
-            and smooth DevOps—growing into system architecture for resilient
-            end-to-end solutions.
+            Product-minded Next.js full-stack developer shipping AI-integrated
+            web apps with crisp UX and production-ready systems.
           </p>
           <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-medium mt-3">
             Here is my{" "}
@@ -167,26 +166,26 @@ export default function HeroSection() {
           <a
             href="https://x.com/SaiVamshi_DevOp"
             target="_blank"
-            className="block z-[5] overflow-hidden rounded shadow-xl ring-1 ring-slate-900/5 relative bg-white h-20 w-20"
+            className="block z-[5] overflow-hidden rounded-2xl shadow-xl ring-1 ring-slate-900/5 relative bg-white h-24 w-24"
             rel="noopener noreferrer"
           >
             <BlurImage
-              src="/Sv.png"
+              src="/saivamshigannoju.png"
               alt="Sai Vamshi Gannoju"
-              className="bg-gray-100 object-contain w-full h-full rounded"
+              className="bg-gray-100 object-cover object-[60%_55%] w-full h-full scale-120 rounded-2xl"
               objectFit="cover"
             />
           </a>
           {/* Subtle grid/lines background */}
           <div className="z-0">
-            <div className="absolute left-0 -right-12 top-0 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
-            <div className="absolute -top-8 bottom-0 left-12 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
-            <div className="absolute left-0 -right-12 bottom-14 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
-            <div className="absolute right-0 -top-2 -bottom-8 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]"></div>
+            <div className="absolute left-0 -right-12 top-0 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]" />
+            <div className="absolute -top-8 bottom-0 left-12 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]" />
+            <div className="absolute left-0 -right-12 bottom-14 h-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_right,transparent,white_4rem,white_calc(100%-4rem),transparent)]" />
+            <div className="absolute right-0 -top-2 -bottom-8 w-px bg-slate-900/[0.1] dark:bg-zinc-300/[0.1] [mask-image:linear-gradient(to_top,transparent,white_4rem,white_calc(100%-4rem),transparent)]" />
             <div className="absolute bottom-full right-10 -mb-px flex h-8 items-end overflow-hidden">
               <div className="flex -mb-px h-[2px] w-40 -scale-x-100">
-                <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-                <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]" />
+                <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]" />
               </div>
             </div>
           </div>

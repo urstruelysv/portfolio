@@ -1,0 +1,46 @@
+---
+title: "Shipping AI Features in a Next.js Product"
+description: "A practical checklist for integrating AI without breaking UX, latency budgets, or reliability."
+date: "2026-03-05"
+author: "Sai Vamshi"
+---
+
+# Shipping AI Features in a Next.js Product
+
+Adding AI to a product is easy. Shipping it **without hurting UX** is the real
+challenge. Here’s the approach I use when building AI features in Next.js.
+
+## 1. Keep the UX fast
+
+AI calls are slow compared to normal API requests. I design for:
+
+- Progressive loading states that explain what’s happening
+- Timeouts and fallback responses
+- Clear “retry” paths that don’t reset the whole page
+
+## 2. Treat prompts like product logic
+
+Prompts aren’t just text — they’re business logic. I keep them:
+
+- Versioned and reviewed
+- Scoped to the minimal context required
+- Tuned for *consistency* over creativity
+
+## 3. Add guardrails early
+
+The best way to avoid bad output is to stop it upstream:
+
+- Limit token budget based on the UX need
+- Validate inputs before sending
+- Catch and normalize model errors
+
+## 4. Observe everything
+
+AI is probabilistic, so you need visibility:
+
+- Log errors by provider
+- Track latency and completion rates
+- Capture user feedback on AI output quality
+
+The result is a product that feels reliable even when the model isn’t perfect.
+That’s the difference between a demo and something people keep using.

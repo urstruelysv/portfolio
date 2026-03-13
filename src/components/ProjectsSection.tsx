@@ -5,6 +5,14 @@ import ProjectCard from "./ProjectCard";
 
 const projects = [
   {
+    title: "AutoCommit CLI",
+    description:
+      "CLI that turns staged diffs into clean, reviewable commit messages with provider-agnostic AI (OpenAI, Groq, Gemini).",
+    href: "https://autocommitcli.aethoscompany.in/",
+    technologies: ["Python", "CLI", "Git", "Gemini API", "OpenAI API", "Groq"],
+    icon: "✨",
+  },
+  {
     title: "Aethos vision Labs",
     description:
       "helping businesses and brands turn views into cash with AI solutions and video content.",
@@ -49,14 +57,6 @@ const projects = [
     href: "https://downloadanything.vercel.app",
     technologies: ["FullStack", "Next.js", "React", "TailwindCSS", "API"],
     icon: "🧠",
-  },
-  {
-    title: "AutoCommit CLI",
-    description:
-      "AI-powered CLI that generates and commits concise git messages from staged changes using Gemini.",
-    href: "https://autocommitcli.aethoscompany.in/",
-    technologies: ["Python", "CLI", "Git", "Gemini API"],
-    icon: "✨",
   },
 ];
 

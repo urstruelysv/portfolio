@@ -1,0 +1,54 @@
+---
+title: "Why I Built AutoCommit (and What I Learned)"
+description: "The real problem AutoCommit solves, the tradeoffs behind the CLI design, and the lessons from shipping it."
+date: "2026-03-12"
+author: "Sai Vamshi"
+---
+
+# Why I Built AutoCommit (and What I Learned)
+
+I built **AutoCommit** because I kept losing time on the same micro‑problem:
+writing clean commit messages from staged changes. The friction was small, but
+constant. I wanted a tool that could summarize *what actually changed* and
+convert it into a concise, consistent message — fast.
+
+## The Problem I Wanted to Solve
+
+Most AI commit tools feel like a black box: vague summaries, no context, and
+little control. I wanted a CLI that:
+
+- Works directly on staged diffs
+- Produces short, reviewable commit messages
+- Lets me swap AI providers without rewriting the tool
+
+## What I Chose to Build
+
+AutoCommit is a CLI that:
+
+- Reads staged changes and summarizes intent
+- Generates a commit message that’s short and specific
+- Lets me plug in different AI providers (OpenAI, Groq, Gemini)
+
+The key decision was **keeping it predictable**. It doesn’t try to auto‑commit
+everything, and it doesn’t hide what it’s doing. You can review the message,
+edit it, and run it as usual.
+
+## What Was Technically Interesting
+
+Two areas were surprisingly tricky:
+
+- **Provider abstraction.** I wanted one interface for multiple models without
+  leaking provider‑specific quirks into the CLI UX.
+- **Diff signal vs. noise.** Large diffs can drown out the change intent. I had
+  to design prompts that stay focused on what matters.
+
+## What I’d Do Differently Next
+
+If I were starting again, I’d add:
+
+- Stronger guardrails around change types (feat, fix, chore, etc.)
+- A small local cache for repeated diff patterns
+- A pre‑commit hook mode for teams
+
+AutoCommit is still evolving, but it solved a real problem for me — and that’s
+the bar I care about most.

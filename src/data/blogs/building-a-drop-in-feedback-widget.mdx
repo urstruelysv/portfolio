@@ -1,0 +1,45 @@
+---
+title: "Building a Drop‑In Feedback Widget (EchoBoard)"
+description: "How I designed a plug‑and‑play comments widget with a clean embed flow and privacy‑first defaults."
+date: "2026-03-08"
+author: "Sai Vamshi"
+---
+
+# Building a Drop‑In Feedback Widget (EchoBoard)
+
+I built **EchoBoard** because I wanted a lightweight way to collect feedback on
+any site without bolting on a heavy platform. The goal was simple: **drop in a
+script, get useful feedback, stay fast**.
+
+## The Problem
+
+Most comment systems are either too heavy or too noisy. I wanted a widget that:
+
+- Loads fast and looks good anywhere
+- Respects privacy by default
+- Can be embedded on any static or dynamic site
+
+## What I Built
+
+EchoBoard is a small embed that:
+
+- Displays comments in a clean, minimal UI
+- Supports quick moderation and spam control
+- Works across Next.js and static sites
+
+## The Interesting Part
+
+The hardest part wasn’t the UI — it was the **embed flow**. I needed to:
+
+- Keep the script tiny and cacheable
+- Avoid blocking page rendering
+- Provide a clean API for authentication without forcing it everywhere
+
+## What I Learned
+
+Shipping a widget taught me to treat **integration as a product**. If the
+integration isn’t smooth, the tool doesn’t get adopted — no matter how good the
+feature set is.
+
+Next iteration: tighter analytics for comments and a simpler “copy‑paste embed”
+onboarding experience.
