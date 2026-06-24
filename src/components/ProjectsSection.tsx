@@ -5,33 +5,49 @@ import ProjectCard from "./ProjectCard";
 
 const projects = [
   {
+    title: "RepoFox",
+    description:
+      "AI-powered repository intelligence. Analyze codebases, generate docs, and map architecture instantly.",
+    href: "https://repofox-web.vercel.app/",
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "AI SDK",
+      "GitHub API",
+      "Vercel"
+    ],
+    icon: "🦊"
+  },
+  {
+    title: "Myna",
+    description:
+      "WhatsApp-powered chat platform. Connect directly with website visitors through WhatsApp to manage conversations.",
+    href: "https://myna-lake.vercel.app/",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "WhatsApp API",
+      "PostgreSQL",
+      "Vercel"
+    ],
+    icon: "🐦"
+  },
+  {
     title: "AutoCommit CLI",
     description:
-      "CLI that turns staged diffs into clean, reviewable commit messages with provider-agnostic AI (OpenAI, Groq, Gemini).",
+      "AI-driven CLI tool. Generate clean, reviewable commit messages automatically from your staged diffs.",
     href: "https://autocommitcli.aethoscompany.in/",
     technologies: ["Python", "CLI", "Git", "Gemini API", "OpenAI API", "Groq"],
     icon: "✨",
   },
   {
-    title: "EchoBoard",
-    description:
-      "A drop-in, privacy-respecting comment & feedback widget for any static or dynamic site.",
-    href: "https://EchoBoard-beta.vercel.app/",
-    technologies: [
-      "Next.js",
-      "Stripe",
-      "TailwindCSS",
-      "Framer",
-      "custom-auth",
-      "Open-ai",
-      "Vercel-SDK",
-    ],
-    icon: "💬",
-  },
-  {
     title: "DownloadAnything",
     description:
-      "Universal download solution, download anything from anywhere super fast.",
+      "Universal high-speed downloader. Capture and save files instantly from anywhere on the web.",
     href: "https://downloadanything.vercel.app",
     technologies: ["FullStack", "Next.js", "React", "TailwindCSS", "API"],
     icon: "🧠",
@@ -39,7 +55,7 @@ const projects = [
   {
     title: "cirro",
     description:
-      "E-commerce website for a packaged drinking water brand cirro - purest of all",
+      "E-commerce platform for premium bottled water. Fast, sleek interface with modern shopping workflows.",
     href: "https://cirrowtr.in",
     technologies: [
       "Next.js",
@@ -49,14 +65,6 @@ const projects = [
       "Framer-motion",
     ],
     icon: "⚡",
-  },
-  {
-    title: "Aethos vision Labs",
-    description:
-      "helping businesses and brands turn views into cash with AI solutions and video content.",
-    href: "https://www.aethoscompany.in",
-    technologies: ["Front-end", "Next.js", "React", "TailwindCSS"],
-    icon: "🌙",
   },
 ];
 
